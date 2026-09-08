@@ -4,28 +4,29 @@ import axios from 'axios';
 import './Login.css';
 
 export const Login = () => {
-  const [isSeller, setIsSeller] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('buyer'); // Default role buyer rahega
   const navigate = useNavigate();
 
   const handleAuth = async (e) => {
     e.preventDefault();
-    const role = isSeller ? 'seller' : 'buyer';
     try {
-      // Backend ke alag login route ke sath connect kiya
       const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       
       if (res.data.user) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
-        if (res.data.user.role === 'seller' || role === 'seller') {
+        
+        // Backend role ya selected role ke mutabiq redirect karo
+        const userRole = res.data.user.role || role;
+        if (userRole === 'seller' || role === 'seller') {
           navigate('/seller');
         } else {
           navigate('/dashboard');
         }
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Authentication failed. Please check details.');
+      alert(err.response?.data?.error || 'Authentication failed. Please check your credentials.');
     }
   };
 
@@ -33,22 +34,23 @@ export const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h2>EcoBazaar</h2>
-          <p>{isSeller ? 'Seller Portal Login' : 'Welcome Back, Shopper!'}</p>
+          <h2>🌱 EcoBazaar</h2>
+          <p>Welcome Back! Please login to continue.</p>
         </div>
 
-        <div className="role-switch">
+        {/* Role Switcher Tabs */}
+        <div className="role-switch-container">
           <button 
             type="button"
-            className={!isSeller ? 'active-tab' : ''} 
-            onClick={() => setIsSeller(false)}
+            className={`role-tab ${role === 'buyer' ? 'active-role' : ''}`}
+            onClick={() => setRole('buyer')}
           >
             Buyer
           </button>
           <button 
             type="button"
-            className={isSeller ? 'active-tab' : ''} 
-            onClick={() => setIsSeller(true)}
+            className={`role-tab ${role === 'seller' ? 'active-role' : ''}`}
+            onClick={() => setRole('seller')}
           >
             Seller
           </button>
@@ -78,11 +80,10 @@ export const Login = () => {
           </div>
 
           <button type="submit" className="submit-btn">
-            {isSeller ? 'Login as Seller' : 'Login to Store'}
+            {role === 'seller' ? 'Login as Seller' : 'Login to Account'}
           </button>
         </form>
 
-        {/* Signup page redirect link using Login.css class */}
         <p className="auth-redirect">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
@@ -90,3 +91,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

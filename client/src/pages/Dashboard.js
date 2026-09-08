@@ -7,6 +7,45 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // --- 1. User Greeting State ---
+  const [userName, setUserName] = useState('Arybhatt');
+
+  // --- 2. Wishlist State & Logic ---
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      const saved = localStorage.getItem('userWishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // --- 3. Flash Deals Countdown Timer State ---
+  const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 12, seconds: 35 });
+
+  // --- 4. Recently Viewed Products State ---
+  const [recentlyViewed, setRecentlyViewed] = useState(() => {
+    try {
+      const saved = localStorage.getItem('recentlyViewedProducts');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // --- 5. Customer Reviews Data ---
+  const reviewsData = [
+    { id: 1, name: "Aarav Sharma", comment: "Amazing eco-friendly quality! Fast delivery too.", rating: 5 },
+    { id: 2, name: "Priya Verma", comment: "Loved the sustainable packaging and fabric feel.", rating: 5 },
+    { id: 3, name: "Rahul Singh", comment: "Great collection and genuine green products.", rating: 4 }
+  ];
+
+  // --- 6. Sorting State ---
+  const [sortBy, setSortBy] = useState('default');
+
+  // --- 7. Quick View Modal State ---
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+
   // Fashion slides data
   const slidesData = [
     {
@@ -31,6 +70,69 @@ export const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
+  // Fetch user name from LocalStorage (Feature 1)
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userName') || localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        if (parsed.name) {
+          setUserName(parsed.name);
+        } else if (typeof storedUser === 'string') {
+          setUserName(storedUser);
+        }
+      } catch (e) {
+        setUserName(storedUser);
+      }
+    }
+  }, []);
+
+  // Save wishlist to LocalStorage (Feature 2)
+  useEffect(() => {
+    localStorage.setItem('userWishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  // Toggle Wishlist Function (Feature 2)
+  const toggleWishlist = (productId) => {
+    setWishlist((prev) => {
+      if (prev.includes(productId)) {
+        return prev.filter(id => id !== productId);
+      } else {
+        return [...prev, productId];
+      }
+    });
+  };
+
+  // Flash Deals Countdown Timer Effect (Feature 3)
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        }
+        return { hours: 0, minutes: 0, seconds: 0 };
+      });
+    }, 1000);
+    return () => clearInterval(timerInterval);
+  }, []);
+
+  // Save Recently Viewed to LocalStorage (Feature 4)
+  useEffect(() => {
+    localStorage.setItem('recentlyViewedProducts', JSON.stringify(recentlyViewed));
+  }, [recentlyViewed]);
+
+  // Add to Recently Viewed Handler (Feature 4)
+  const addToRecentlyViewed = (product) => {
+    setRecentlyViewed(prev => {
+      const filtered = prev.filter(item => item.id !== product.id);
+      return [product, ...filtered].slice(0, 5); // Keep max 5 items
+    });
+  };
+
   // Auto slide change every 3.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
@@ -50,10 +152,10 @@ export const Dashboard = () => {
             brand: item.brand || 'FashionBrand',
             title: item.title || item.name || 'Stylish Outfit',
             description: item.description || '',
-            category: item.category || 'Men Clothing', // Seller द्वारा दी गई category
+            category: item.category || 'Men Clothing',
             sizes: item.sizes || 'S, M, L, XL',
-            price: item.price,
-            offer_price: item.offer_price,
+            price: item.price || 999,
+            offer_price: item.offer_price || 499,
             rating: item.rating || '4.5',
             image: item.image ? (item.image.startsWith('http') ? item.image : `http://localhost:5000/${item.image}`) : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=400&q=80'
           }));
@@ -67,17 +169,25 @@ export const Dashboard = () => {
     fetchDashboardProducts();
   }, []);
 
-  // Filter & Search Logic
+  // Filter, Search & Sort Logic (Features 6)
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'All' || product.category?.toLowerCase() === selectedCategory.toLowerCase();
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.category.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
+  }).sort((a, b) => {
+    const priceA = a.offer_price || a.price;
+    const priceB = b.offer_price || b.price;
+    if (sortBy === 'lowToHigh') return priceA - priceB;
+    if (sortBy === 'highToLow') return priceB - priceA;
+    if (sortBy === 'rating') return b.rating - a.rating;
+    return 0; // default
   });
 
   return (
     <div className="dashboard-wrapper" style={{ backgroundColor: '#d9c3b2' }}>
+
       {/* Navbar */}
       <header className="eco-header">
         <div className="nav-left">
@@ -110,6 +220,16 @@ export const Dashboard = () => {
           </Link>
         </div>
       </header>
+      {/* Feature 1: Welcome Banner */}
+      <div className="welcome-banner">
+        <div className="welcome-text">
+          <h1>Welcome back, {userName}! 🌱</h1>
+          <p>Explore our latest eco-friendly collection built for a sustainable future.</p>
+        </div>
+        <div className="welcome-badge">
+          <span>🌿 EcoBazaar Member</span>
+        </div>
+      </div>
 
       {/* Main Container */}
       <div className="container">
@@ -161,6 +281,20 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
+        {/* Feature 3: Flash Deals / Countdown Timer Section */}
+        <div className="flash-deals-section">
+          <div className="flash-deals-header">
+            <div className="flash-title-wrapper">
+              <h2>⚡ Flash Deals</h2>
+              <p>Limited-time sustainable offers, grab them before they expire!</p>
+            </div>
+            <div className="countdown-timer">
+              <span className="time-box">{String(timeLeft.hours).padStart(2, '0')}</span> :
+              <span className="time-box">{String(timeLeft.minutes).padStart(2, '0')}</span> :
+              <span className="time-box">{String(timeLeft.seconds).padStart(2, '0')}</span>
+            </div>
+          </div>
+        </div>
 
         {/* Sliding Ticker Tape */}
         <div className="ticker-wrapper" style={{ background: '#282c3f', color: '#fff', padding: '12px 0', borderRadius: '8px', overflow: 'hidden', margin: '20px 0' }}>
@@ -172,12 +306,12 @@ export const Dashboard = () => {
             <div className="ticker-item" style={{ padding: '0 30px' }}>🚚 Free Shipping on All Prepaid Orders Above ₹499</div>
           </div>
         </div>
-        {/* Premium Search & Category Filter Bar */}
+        {/* Premium Search, Category Filter & Sorting Bar */}
         <div className="filter-search-section">
           <div className="filter-top-row">
             <h2 className="section-title">Trending Clothing Styles</h2>
 
-            {/* Yahan classes change karni hain */}
+            {/* Search Box */}
             <div className="trending-search-box">
               <i className="fa-solid fa-magnifying-glass trending-search-icon"></i>
               <input
@@ -199,21 +333,38 @@ export const Dashboard = () => {
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="category-filters">
-            {['All', 'Men Clothing', 'Women Clothing', 'Kids', 'Home', 'Beauty', 'Footwear'].map((cat) => (
-              <button
-                key={cat}
-                className={`filter-pill ${selectedCategory === cat ? 'active' : ''}`}
-                onClick={() => setSelectedCategory(cat)}
+          {/* Category Pills & Sorting Dropdown Row */}
+          <div className="filter-bottom-row">
+            {/* Category Filter Pills */}
+            <div className="category-filters">
+              {['All', 'Men Clothing', 'Women Clothing', 'Kids', 'Home', 'Beauty', 'Footwear'].map((cat) => (
+                <button
+                  key={cat}
+                  className={`filter-pill ${selectedCategory === cat ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Sorting Dropdown */}
+            <div className="sorting-container">
+              <label htmlFor="sortSelect">Sort By: </label>
+              <select
+                id="sortSelect"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="sort-dropdown"
               >
-                {cat}
-              </button>
-              
-            ))}
+                <option value="default">Default</option>
+                <option value="lowToHigh">Price: Low to High</option>
+                <option value="highToLow">Price: High to Low</option>
+                <option value="rating">Customer Rating</option>
+              </select>
+            </div>
           </div>
         </div>
-
         {/* Product Grid */}
         <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '20px', padding: '10px 0' }}>
           {filteredProducts.length > 0 ? (
@@ -279,6 +430,23 @@ export const Dashboard = () => {
                       >
                         Buy Now
                       </button>
+                      {/* Product Card ke andar yeh button daal dena */}
+                      <button
+                        className={`wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}`}
+                        onClick={() => toggleWishlist(product.id)}
+                        title={wishlist.includes(product.id) ? "Remove from Wishlist" : "Add to Wishlist"}
+                      >
+                        {wishlist.includes(product.id) ? '❤️' : '🤍'}
+                      </button>
+                      <button
+                        className="quick-view-trigger-btn"
+                        onClick={() => {
+                          setQuickViewProduct(product);
+                          addToRecentlyViewed(product);
+                        }}
+                      >
+                        Quick View 👁️
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -291,6 +459,62 @@ export const Dashboard = () => {
             </div>
           )}
         </div>
+      </div>
+      {/* Feature 5: Customer Reviews & Testimonials Section */}
+      <div className="testimonials-section">
+        <h3 className="section-title">⭐ What Our Eco-Buyers Say</h3>
+        <div className="testimonials-grid">
+          {reviewsData.map((review) => (
+            <div key={review.id} className="testimonial-card">
+              <div className="testimonial-rating">
+                {"⭐".repeat(review.rating)}
+              </div>
+              <p className="testimonial-comment">"{review.comment}"</p>
+              <h5 className="testimonial-author">- {review.name}</h5>
+            </div>
+          ))}
+        </div>
+        {/* Feature 7: Interactive Quick View Modal */}
+        {quickViewProduct && (
+          <div className="quick-view-overlay" onClick={() => setQuickViewProduct(null)}>
+            <div className="quick-view-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close-btn" onClick={() => setQuickViewProduct(null)}>&times;</button>
+              <div className="modal-content-grid">
+                <div className="modal-image-box">
+                  <img src={quickViewProduct.image} alt={quickViewProduct.title} />
+                </div>
+                <div className="modal-details-box">
+                  <span className="modal-brand">{quickViewProduct.brand}</span>
+                  <h2>{quickViewProduct.title}</h2>
+                  <div className="modal-rating">⭐ {quickViewProduct.rating}</div>
+                  <div className="modal-price-box">
+                    <span className="modal-offer-price">₹{quickViewProduct.offer_price || quickViewProduct.price}</span>
+                    {quickViewProduct.offer_price && (
+                      <span className="modal-original-price">₹{quickViewProduct.price}</span>
+                    )}
+                  </div>
+                  <p className="modal-desc">{quickViewProduct.description || "A wonderful eco-friendly fashion piece designed for sustainable style and everyday comfort."}</p>
+
+                  <div className="modal-sizes">
+                    <label>Available Sizes:</label>
+                    <div className="size-pills">
+                      {(quickViewProduct.sizes || "S, M, L, XL").split(',').map(size => (
+                        <span key={size.trim()} className="size-badge">{size.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button className="modal-add-to-cart-btn" onClick={() => {
+                    alert(`Added ${quickViewProduct.title} to cart successfully! 🛒`);
+                    setQuickViewProduct(null);
+                  }}>
+                    Add to Cart 🛒
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <footer className="eco-footer" style={{ background: '#282c3f', color: '#fff', padding: '40px 20px', marginTop: '40px' }}>

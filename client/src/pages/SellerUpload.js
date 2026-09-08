@@ -270,20 +270,20 @@ const SellerUpload = () => {
             <p>Select your primary business objective to receive personalized data-driven growth insights.</p>
           </div>
           <div className="ai-buttons">
-            <button 
-              className={`ai-goal-btn ${growthGoal === 'sales' ? 'active' : ''}`} 
+            <button
+              className={`ai-goal-btn ${growthGoal === 'sales' ? 'active' : ''}`}
               onClick={() => handleAIGrowthAdvice('sales')}
             >
               📈 Increase Sales & AOV
             </button>
-            <button 
-              className={`ai-goal-btn ${growthGoal === 'visibility' ? 'active' : ''}`} 
+            <button
+              className={`ai-goal-btn ${growthGoal === 'visibility' ? 'active' : ''}`}
               onClick={() => handleAIGrowthAdvice('visibility')}
             >
               🔍 Boost Store Visibility
             </button>
-            <button 
-              className={`ai-goal-btn ${growthGoal === 'retention' ? 'active' : ''}`} 
+            <button
+              className={`ai-goal-btn ${growthGoal === 'retention' ? 'active' : ''}`}
               onClick={() => handleAIGrowthAdvice('retention')}
             >
               ❤️ Improve Customer Loyalty
@@ -473,6 +473,62 @@ const SellerUpload = () => {
           )}
         </div>
       </div>
+      <footer className="ecobazaar-footer">
+        <div className="footer-container">
+
+          {/* Column 1: Brand Info */}
+          <div className="footer-col">
+            <div className="footer-brand">🌱 EcoBazaar Seller Hub</div>
+            <p className="footer-desc">
+              Empowering green merchants and conscious creators to build a sustainable, zero-waste future together. Manage inventory, scale sales, and make an impact.
+            </p>
+            <div className="social-icons">
+              <a href="#facebook"><i className="fa-brands fa-facebook-f"></i></a>
+              <a href="#instagram"><i className="fa-brands fa-instagram"></i></a>
+              <a href="#twitter"><i className="fa-brands fa-twitter"></i></a>
+              <a href="#linkedin"><i className="fa-brands fa-linkedin-in"></i></a>
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div className="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#dashboard">Seller Dashboard</a></li>
+              <li><a href="#expense-tracker">Financial Tracker</a></li>
+              <li><a href="#ai-growth">AI Growth Hub</a></li>
+              <li><a href="#upload-section">Upload Product</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Support & Resources */}
+          <div className="footer-col">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#guidelines">Merchant Guidelines</a></li>
+              <li><a href="#shipping">Green Shipping Policy</a></li>
+              <li><a href="#returns">Returns & Payouts</a></li>
+              <li><a href="#help">Seller Support Desk</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter / Contact */}
+          <div className="footer-col">
+            <h3>Stay Updated</h3>
+            <p className="newsletter-text">Get weekly eco-trends and growth strategies directly in your inbox.</p>
+            <div className="newsletter-box">
+              <input type="email" placeholder="Enter your email..." />
+              <button type="button">Join</button>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Copyright Bar */}
+        <div className="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} EcoBazaar Retail Tech. All rights reserved. Built with sustainability in mind.</p>
+        </div>
+      </footer>
 
     </div>
   );

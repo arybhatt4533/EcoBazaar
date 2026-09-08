@@ -13,7 +13,7 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', {
+            await axios.post('http://localhost:5000/api/auth/register', {
                 name,
                 email,
                 password,
@@ -29,37 +29,59 @@ const Signup = () => {
     return (
         <div className="signup-container">
             <form onSubmit={handleSignup} className="signup-card">
-                <h2 className="signup-title">Create EcoBazaar Account</h2>
-                
-                <div className="form-group">
+                <div className="signup-header">
+                    <h2>🌱 EcoBazaar</h2>
+                    <p>Create your account to get started.</p>
+                </div>
+
+                <div className="input-group">
                     <label>Full Name</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <input
+                        type="text"
+                        placeholder="John Doe"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
                 </div>
 
-                <div className="form-group">
+                <div className="input-group">
                     <label>Email Address</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input
+                        type="email"
+                        placeholder="name@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
 
-                <div className="form-group">
+                <div className="input-group">
                     <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                 </div>
 
-                <div className="form-group">
-                    <label>Role</label>
-                    <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <div className="input-group">
+                    <label>Account Role</label>
+                    <select value={role} onChange={(e) => setRole(e.target.value)} className="select-box">
                         <option value="buyer">Buyer</option>
                         <option value="seller">Seller</option>
                     </select>
                 </div>
 
-                <button type="submit" className="signup-btn">
-                    Sign Up
+                <button type="submit" className="submit-btn">
+                    Create Account
                 </button>
 
-                <p className="login-redirect">
-                    Already have an account? <Link to="/">Login</Link>
+                <p className="auth-redirect">
+                    {/* Sahi wali line */}
+                    Already have an account? <Link to="/login">Login</Link>
                 </p>
             </form>
         </div>

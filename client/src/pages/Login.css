@@ -3,119 +3,151 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--light-bg);
+  background: linear-gradient(135deg, #cabfc0 0%, #d1e1b6 100%);
   padding: 20px;
+  font-family: 'Inter', sans-serif;
 }
 
 .login-card {
-  background: #ffffff;
-  padding: 40px;
+  background: #f3e5d7;
+  padding: 45px 40px;
   border-radius: 20px;
-  border: 1px solid var(--card-border);
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-2px);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 .login-header h2 {
-  color: var(--dark-green);
-  font-size: 2rem;
-  margin: 0 0 5px 0;
-  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .login-header p {
+  font-size: 14px;
   color: #64748b;
-  text-align: center;
-  margin-bottom: 24px;
-  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.role-switch {
+/* Role Switcher Tabs */
+.role-switch-container {
   display: flex;
-  background: #f1f5f9;
-  border-radius: 12px;
+  background: #f8fafc;
   padding: 4px;
-  margin-bottom: 24px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  margin-bottom: 20px;
 }
 
-.role-switch button {
+.role-tab {
   flex: 1;
-  background: transparent;
-  border: none;
   padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 8px;
+  border: none;
+  background: transparent;
   color: #64748b;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 9px;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.role-switch button.active-tab {
+.role-tab.active-role {
   background: #ffffff;
-  color: var(--primary-green);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  color: #ff3f6c;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .input-group {
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .input-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: #334155;
-  margin-bottom: 6px;
 }
 
 .input-group input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 0.95rem;
+  padding: 14px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.25s ease;
+  background: #f8fafc;
+  color: #0f172a;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-group input:focus {
-  border-color: var(--primary-green);
+  border-color: #ff3f6c;
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.12);
+  background: #ffffff;
 }
 
 .submit-btn {
-  width: 100%;
-  background-color: var(--primary-green);
+  background: linear-gradient(135deg, #ff3f6c 0%, #e0325b 100%);
   color: white;
-  border: none;
   padding: 14px;
+  border: none;
   border-radius: 12px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 15px;
   cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
   margin-top: 10px;
-  transition: background-color 0.2s;
+  box-shadow: 0 4px 12px rgba(255, 63, 108, 0.3);
 }
 
 .submit-btn:hover {
-  background-color: var(--dark-green);
+  background: linear-gradient(135deg, #e0325b 0%, #c5244b 100%);
+  box-shadow: 0 6px 16px rgba(255, 63, 108, 0.4);
+  transform: translateY(-1px);
 }
-/* Signup Redirect Link Styling inside Login Page */
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
 .auth-redirect {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
   font-size: 14px;
-  color: #666666;
+  color: #64748b;
 }
 
 .auth-redirect a {
-  color: #2c5e3b;
-  font-weight: 600;
+  color: #ff3f6c;
+  font-weight: 700;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
 
 .auth-redirect a:hover {
+  color: #e0325b;
   text-decoration: underline;
-  color: #234b2f;
 }
