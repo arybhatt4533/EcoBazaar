@@ -20,7 +20,7 @@ const Signup = () => {
                 role
             });
             alert('Registration successful! Please login.');
-            navigate('/'); // Login page par bhej dega
+            navigate('/login'); // Login page par bhej dega
         } catch (err) {
             alert(err.response?.data?.error || 'Registration failed');
         }

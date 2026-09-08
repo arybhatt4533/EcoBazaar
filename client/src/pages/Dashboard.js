@@ -210,13 +210,9 @@ export const Dashboard = () => {
         </div>
 
         <div className="nav-right">
-          <Link className="nav-action" to="/login">
-            <i className="fa-regular fa-user"></i>
-            Profile
-          </Link>
           <Link className="nav-action" to="/checkout">
             <i className="fa-solid fa-bag-shopping"></i>
-            Cart
+            Profile
           </Link>
         </div>
       </header>
@@ -412,25 +408,73 @@ export const Dashboard = () => {
                     </div>
 
                     <div style={{ display: 'flex', gap: '8px' }}>
+                      {/* --- 1. Add to Cart Button --- */}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          alert(`Added ${product.title || product.name} to cart!`);
+                          try {
+                            // Cart items ko localStorage mein save karne ka logic
+                            const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+                            // Check karo kya product pehle se cart me hai
+                            const productIndex = existingCart.findIndex(item => (item.id || item._id) === (product.id || product._id));
+
+                            if (productIndex > -1) {
+                              existingCart[productIndex].quantity = (existingCart[productIndex].quantity || 1) + 1;
+                            } else {
+                              existingCart.push({ ...product, quantity: 1 });
+                            }
+
+                            localStorage.setItem('cartItems', JSON.stringify(existingCart));
+                            alert(`Added ${product.title} to cart successfully! 🛒`);
+                          } catch (err) {
+                            console.error("Cart error:", err);
+                          }
                         }}
                         style={{ flex: 1, padding: '8px', background: '#fff', border: '1px solid #ff3f6c', color: '#ff3f6c', fontWeight: 'bold', fontSize: '12px', borderRadius: '4px', cursor: 'pointer' }}
                       >
                         Add to Cart
                       </button>
+
+                      {/* --- 2. Buy Now Button --- */}
                       <button
-                        onClick={(e) => {
+                        onClick={async (e) => {
                           e.stopPropagation();
-                          navigate('/checkout');
+                          try {
+                            const user = JSON.parse(localStorage.getItem('user'));
+                            if (!user || !user.id) {
+                              alert('Please login first!');
+                              navigate('/login');
+                              return;
+                            }
+
+                            // Pehle product ko cart/checkout list me daalo
+                            const existingCart = [{ ...product, quantity: 1 }];
+                            localStorage.setItem('cartItems', JSON.stringify(existingCart));
+
+                            // Ab check karo ki user ka address saved hai ya nahi database me
+                            const res = await axios.get(`http://localhost:5000/api/addresses/${user.id}`);
+
+                            if (res.data && res.data.length > 0) {
+                              // Address saved hai -> Seedha Checkout/Payment page
+                              navigate('/checkout');
+                            } else {
+                              // Address nahi hai -> Tab bhejo `/add-address` par
+                              alert('Please add your delivery address first!');
+                              navigate('/add-address');
+                            }
+                          } catch (err) {
+                            console.error(err);
+                            // Fallback agar API fail ho ya address table na mile
+                            navigate('/add-address');
+                          }
                         }}
                         style={{ flex: 1, padding: '8px', background: '#ff3f6c', border: 'none', color: '#fff', fontWeight: 'bold', fontSize: '12px', borderRadius: '4px', cursor: 'pointer' }}
                       >
                         Buy Now
                       </button>
-                      {/* Product Card ke andar yeh button daal dena */}
+
+                      {/* Wishlist Button */}
                       <button
                         className={`wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}`}
                         onClick={() => toggleWishlist(product.id)}
@@ -438,6 +482,7 @@ export const Dashboard = () => {
                       >
                         {wishlist.includes(product.id) ? '❤️' : '🤍'}
                       </button>
+
                       <button
                         className="quick-view-trigger-btn"
                         onClick={() => {
