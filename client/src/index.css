@@ -1,0 +1,18 @@
+:root {
+  --primary-green: #16a34a;
+  --dark-green: #052e16;
+  --light-bg: #f0fdf4;
+  --card-border: #dcfce7;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-bg);
+  font-family: 'Outfit', 'Poppins', sans-serif;
+  color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,121 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--light-bg);
+  padding: 20px;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.08);
+}
+
+.login-header h2 {
+  color: var(--dark-green);
+  font-size: 2rem;
+  margin: 0 0 5px 0;
+  text-align: center;
+}
+
+.login-header p {
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.role-switch {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.role-switch button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.role-switch button.active-tab {
+  background: #ffffff;
+  color: var(--primary-green);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-green);
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--dark-green);
+}
+/* Signup Redirect Link Styling inside Login Page */
+.auth-redirect {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.auth-redirect a {
+  color: #2c5e3b;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-redirect a:hover {
+  text-decoration: underline;
+  color: #234b2f;
+}

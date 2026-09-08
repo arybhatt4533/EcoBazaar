@@ -1,0 +1,547 @@
+/* ==========================================
+   ECOBAZAAR SELLER PORTAL - MYNTRA RED THEME
+   ========================================== */
+
+:root {
+  --bg-main: #f4f5f7;
+  --card-bg: #ffffff;
+  --primary-red: #ff3f6c;
+  /* Myntra Red Accent */
+  --primary-red-hover: #e0325b;
+  --dark-maroon: #282c3f;
+  --text-dark: #282c3f;
+  --text-muted: #535766;
+  --border-color: #d4d5df;
+  --header-bg: #ffffff;
+}
+/* CSS ke bilkul START (TOP) mein ye paste karo */
+html, body {
+    background-color: #e5d7d7 !important;
+    color: #efccaf !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.seller-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. NAVBAR STYLING (Clean White & Premium Red Look) */
+.seller-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #fffaf3, #cfdc85, #fffaf3);
+  padding: 15px 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #ffbac7;
+}
+
+.nav-brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: #b7094c;
+  /* Rich red theme brand name */
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2b2d42;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+  background-color: #e63946;
+  /* Hover par red pill button jaisa effect */
+}
+
+/* 2. HERO SLIDER STYLING (Vibrant Reddish Gradient Theme) */
+.seller-hero-slider {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  height: 290px;
+  margin: 30px auto 20px auto;
+  background: linear-gradient(135deg, #ff1461 0%, #ff4b72 50%, #c7002b 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(255, 63, 108, 0.25);
+  display: flex;
+  align-items: center;
+}
+
+.seller-hero-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.seller-hero-slider .slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.slider-content {
+  max-width: 850px;
+}
+
+.slider-content span {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  letter-spacing: 0.8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.slider-content h1 {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.slider-content p {
+  color: #ffe6eb;
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Slider Controls (Arrows & Dots) */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #ff3f6c;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.slider-btn:hover {
+  background-color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prev-btn {
+  left: 18px;
+}
+
+.next-btn {
+  right: 18px;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.slider-dots .dot {
+  width: 9px;
+  height: 9px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dots .dot.active {
+  width: 26px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+/* 3. PRODUCT UPLOAD FORM CONTAINER */
+.upload-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px 60px 20px;
+}
+
+.upload-card {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 800px;
+  padding: 45px;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  border-top: 5px solid #ff3f6c;
+  border: 1px solid #eaeaea;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.upload-header h2 {
+  color: #282c3f;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.upload-header p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Form Grid & Inputs Layout */
+.upload-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group.full {
+  grid-column: span 2;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3e4152;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  padding: 13px 16px;
+  border: 1.5px solid #d4d5df;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #fafbfc;
+  color: #282c3f;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #ff3f6c;
+  box-shadow: 0 0 0 3px rgba(255, 63, 108, 0.12);
+  background-color: #ffffff;
+}
+
+.select-box {
+  cursor: pointer;
+}
+
+/* File Input Custom Style Fix */
+.input-group input[type="file"] {
+  padding: 10px;
+  background: #ffffff;
+  cursor: pointer;
+  border: 2px dashed #d4d5df;
+}
+
+.input-group input[type="file"]:hover {
+  border-color: #ff3f6c;
+}
+
+/* Action Buttons */
+.upload-btn {
+  grid-column: span 2;
+  background-color: #ff3f6c;
+  color: #ffffff;
+  border: none;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 63, 108, 0.3);
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.upload-btn:hover {
+  background-color: #e0325b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 63, 108, 0.4);
+}
+
+.back-btn {
+  grid-column: span 2;
+  background-color: #f5f5f6;
+  color: #535766;
+  border: 1.5px solid #d4d5df;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #eaeaec;
+  color: #282c3f;
+  border-color: #94969f;
+}
+
+/* Responsive Design for Mobile Devices */
+@media (max-width: 768px) {
+  .seller-navbar {
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    gap: 15px;
+    font-size: 13px;
+  }
+
+  .seller-hero-slider {
+    height: auto;
+    min-height: 250px;
+    margin: 15px;
+    width: auto;
+  }
+
+  .seller-hero-slider .slide {
+    padding: 30px 25px;
+    position: relative;
+  }
+
+  .slider-content h1 {
+    font-size: 24px;
+  }
+
+  .upload-container {
+    padding: 10px 15px 40px 15px;
+  }
+
+  .upload-card {
+    padding: 25px 20px;
+  }
+
+  .upload-form {
+    grid-template-columns: 1fr;
+  }
+
+  .input-group.full {
+    grid-column: span 1;
+  }
+
+  .upload-btn,
+  .back-btn {
+    grid-column: span 1;
+  }
+}
+/* ==========================================
+   HORIZONTAL LIST LAYOUT FOR UPLOADED PRODUCTS
+   ========================================== */
+
+.my-products-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 30px auto 60px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.section-title {
+  margin-bottom: 25px;
+  border-left: 5px solid #800f2f;
+  padding-left: 15px;
+}
+
+.section-title h3 {
+  color: #800f2f;
+  font-size: 24px;
+  margin: 0 0 5px 0;
+  font-weight: 800;
+}
+
+.section-title p {
+  color: #555;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Products Container (Grid ko hatakar ab column stack banaya hai) */
+.products-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Horizontal Card Layout */
+.uploaded-product-card {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(128, 15, 47, 0.08);
+  border: 1px solid #ffccd5;
+  padding: 15px 20px;
+  gap: 20px;
+  transition: all 0.2s ease;
+}
+
+.uploaded-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(128, 15, 47, 0.15);
+  border-color: #a4133c;
+}
+
+/* Left Side: Product Image (Square & Neat) */
+.uploaded-product-card img {
+  width: 85px;
+  height: 85px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+/* Middle: Product Details Info */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+}
+
+.card-brand {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a4133c;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Upar Product Name / Title */
+.product-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.price-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.offer-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #800f2f;
+}
+
+.mrp {
+  font-size: 13px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.category-tag {
+  align-self: flex-start;
+  background-color: #fff0f3;
+  color: #b7094c;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+
+/* Empty State Styling */
+.no-products {
+  text-align: center;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 10px;
+  color: #666;
+  border: 2px dashed #cbd5e1;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .uploaded-product-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+  
+  .uploaded-product-card img {
+    width: 100%;
+    height: 150px;
+  }
+}
