@@ -30,7 +30,7 @@ const Signup = () => {
         <div className="signup-container">
             <form onSubmit={handleSignup} className="signup-card">
                 <div className="signup-header">
-                    <h2>🌱 EcoBazaar</h2>
+                    <h2>🛒 EcoBazaar</h2>
                     <p>Create your account to get started.</p>
                 </div>
 

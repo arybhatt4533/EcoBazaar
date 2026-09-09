@@ -62,6 +62,16 @@ export const Dashboard = () => {
       title: "ETHNIC & PARTY WEAR",
       subtitle: "Flat 40% OFF | Elegant Kurtas & Dresses",
       image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop&q=80"
+    },
+     {
+      title: "CASUAL WEAR COLLECTION",
+      subtitle: "Flat 30% OFF | Elegant Casual Outfits",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS8X38EO7TBcQ2bQn9kLJ5G0VkAH7G2f-l00gPFKNJTw&s=10"
+    },
+     {
+      title: "OFFiCIAL WEAR COLLECTION",
+      subtitle: "Flat 30% OFF | Elegant Office Outfits",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVJxJwaGZVB3nkQ9olBTziRIcCsFmBgwIROvDFw1eotg&s=10"
     }
   ];
 
@@ -198,7 +208,32 @@ export const Dashboard = () => {
             <li><Link to="/dashboard">Men</Link></li>
             <li><Link to="/dashboard">Women</Link></li>
             <li><Link to="/dashboard">Kids</Link></li>
-            <li><Link to="/seller" style={{ color: '#ff3f6c' }}>Seller Portal</Link></li>
+            <li>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  const user = JSON.parse(localStorage.getItem('user'));
+
+                  if (!user || !user.id) {
+                    alert('Please login first to access the Seller Portal!');
+                    navigate('/login');
+                    return;
+                  }
+
+                  const isSeller = localStorage.getItem('isSeller') === 'true' || user.role === 'seller';
+
+                  if (isSeller) {
+                    navigate('/seller');
+                  } else {
+                    alert('Please register/login as a Seller first!');
+                    navigate('/Login'); // Ya jo bhi route tune seller registration ke liye banaya ho
+                  }
+                }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ff3f6c', fontWeight: 'bold', fontSize: '15px', padding: 0 }}
+              >
+                Seller Portal
+              </button>
+            </li>
           </ul>
         </div>
 
@@ -212,7 +247,7 @@ export const Dashboard = () => {
         <div className="nav-right">
           <Link className="nav-action" to="/checkout">
             <i className="fa-solid fa-bag-shopping"></i>
-            Profile
+            🤵🏼Profile
           </Link>
         </div>
       </header>
@@ -245,6 +280,42 @@ export const Dashboard = () => {
             </div>
           ))}
         </div>
+        <div className="weather-section">
+          <h2 className="section-header-title">Shop By Weather & Season</h2>
+          <div className="weather-grid">
+
+            {/* Card 1: Summer */}
+            <div className="weather-card" onClick={() => navigate('/category/summer')}>
+              <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500" alt="Summer Breeze" />
+              <div className="weather-overlay">
+                <span>☀️ Summer Breeze</span>
+                <h3>Light Linen & Cotton</h3>
+                <p>Breathable outfits for hot days</p>
+              </div>
+            </div>
+
+            {/* Card 2: Monsoon */}
+            <div className="weather-card" onClick={() => navigate('/category/monsoon')}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy9DAbeKzMwf7Ku7F7y1aFi7pXcWSJoDJa3Mqk-FoMfQ&s=10" alt="Monsoon Comfort" />
+              <div className="weather-overlay">
+                <span>🌧️ Monsoon Comfort</span>
+                <h3>Quick-Dry Fabrics</h3>
+                <p>Stay cozy and stylish in rains</p>
+              </div>
+            </div>
+
+            {/* Card 3: Winter */}
+            <div className="weather-card" onClick={() => navigate('/category/winter')}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdgW9qgHqUA_YMQoNViM57ryjMz7uLZ-7WiZOjuSgW-g&s=10" alt="Winter Earth" />
+              <div className="weather-overlay">
+                <span>❄️ Earth Knitwear</span>
+                <h3>Recycled Wool & Knits</h3>
+                <p>Warm layers made sustainably</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
         {/* Multi-Card Promotional Offer Grid */}
         <div className="promo-slider-section">
@@ -255,7 +326,7 @@ export const Dashboard = () => {
                 <h3 style={{ fontSize: '18px', margin: '8px 0 4px 0' }}>Casual Denims</h3>
                 <p style={{ fontSize: '14px', fontWeight: '600' }}>Min. <strong>50% OFF</strong></p>
               </div>
-              <img src="https://images.unsplash.com/photo-1542272604-787c96355d54?w=300" alt="Denim" style={{ width: '110px', height: '110px', borderRadius: '8px', objectFit: 'cover' }} />
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQXi6VWqnq3OnTXQIWj_SEJjNralIEPPcGP7t_Vavfuw&s=10" alt="Denim" style={{ width: '110px', height: '110px', borderRadius: '8px', objectFit: 'cover' }} />
             </div>
 
             <div className="promo-banner-card" style={{ background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)', borderRadius: '12px', padding: '20px', color: '#064e3b', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -378,6 +449,7 @@ export const Dashboard = () => {
                       alt={product.title}
                       style={{ width: '100%', height: '260px', objectFit: 'cover', borderRadius: '6px' }}
                     />
+                    <span className="product-badge badge-eco">🌳 100% Eco-Friendly</span>
                   </div>
 
                   <div style={{ marginTop: '10px' }}>
@@ -408,6 +480,7 @@ export const Dashboard = () => {
                     </div>
 
                     <div style={{ display: 'flex', gap: '8px' }}>
+                    
                       {/* --- 1. Add to Cart Button --- */}
                       <button
                         onClick={(e) => {
@@ -448,32 +521,30 @@ export const Dashboard = () => {
                               return;
                             }
 
-                            // Pehle product ko cart/checkout list me daalo
-                            const existingCart = [{ ...product, quantity: 1 }];
+                            // 1. Jaise Add to Cart karta hai, waise hi cart items fetch/update karo
+                            const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+                            const productIndex = existingCart.findIndex(item => (item.id || item._id) === (product.id || product._id));
+
+                            if (productIndex > -1) {
+                              existingCart[productIndex].quantity = (existingCart[productIndex].quantity || 1) + 1;
+                            } else {
+                              existingCart.push({ ...product, quantity: 1 });
+                            }
+
+                            // 2. LocalStorage mein cart save kar do
                             localStorage.setItem('cartItems', JSON.stringify(existingCart));
 
-                            // Ab check karo ki user ka address saved hai ya nahi database me
-                            const res = await axios.get(`http://localhost:5000/api/addresses/${user.id}`);
-
-                            if (res.data && res.data.length > 0) {
-                              // Address saved hai -> Seedha Checkout/Payment page
-                              navigate('/checkout');
-                            } else {
-                              // Address nahi hai -> Tab bhejo `/add-address` par
-                              alert('Please add your delivery address first!');
-                              navigate('/add-address');
-                            }
+                            // 3. Seedha profile/dashboard page par bhej do jahan apna CheckoutCart component chal raha hai
+                            navigate('/checkout'); // Agar tumhara profile route kuch aur hai (jaise '/dashboard' ya '/account'), toh wo yahan likh dena
                           } catch (err) {
-                            console.error(err);
-                            // Fallback agar API fail ho ya address table na mile
-                            navigate('/add-address');
+                            console.error("Buy Now error:", err);
+                            alert('Something went wrong!');
                           }
                         }}
                         style={{ flex: 1, padding: '8px', background: '#ff3f6c', border: 'none', color: '#fff', fontWeight: 'bold', fontSize: '12px', borderRadius: '4px', cursor: 'pointer' }}
                       >
                         Buy Now
                       </button>
-
                       {/* Wishlist Button */}
                       <button
                         className={`wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}`}
@@ -562,33 +633,74 @@ export const Dashboard = () => {
         )}
       </div>
 
-      <footer className="eco-footer" style={{ background: '#282c3f', color: '#fff', padding: '40px 20px', marginTop: '40px' }}>
-        <div className="footer-container" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px' }}>
-          <div>
-            <h3 style={{ fontSize: '14px', marginBottom: '15px', color: '#ff3f6c' }}>ONLINE SHOPPING</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li><Link to="/dashboard" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Men's Clothing</Link></li>
-              <li><Link to="/dashboard" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Women's Clothing</Link></li>
-              <li><Link to="/dashboard" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Kid's Wear</Link></li>
-              <li><Link to="/seller" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Seller Portal</Link></li>
+      <footer className="eco-footer">
+        <div className="footer-container">
+
+          {/* Column 1: Online Shopping */}
+          <div className="footer-section">
+            <h3>ONLINE SHOPPING</h3>
+            <ul>
+              <li><Link to="/dashboard">Men's Clothing</Link></li>
+              <li><Link to="/dashboard">Women's Clothing</Link></li>
+              <li><Link to="/dashboard">Kid's Wear</Link></li>
+              <li>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const user = JSON.parse(localStorage.getItem('user'));
+
+                    if (!user || !user.id) {
+                      alert('Please login first to access the Seller Portal!');
+                      navigate('/login');
+                      return;
+                    }
+
+                    const isSeller = localStorage.getItem('isSeller') === 'true' || user.role === 'seller';
+
+                    if (isSeller) {
+                      navigate('/seller');
+                    } else {
+                      alert('Please register/login as a Seller first!');
+                      navigate('/seller-login');
+                    }
+                  }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#696e79', fontSize: '13px', padding: 0, textAlign: 'left' }}
+                >
+                  Seller Portal
+                </button>
+              </li>
             </ul>
           </div>
-          <div>
-            <h3 style={{ fontSize: '14px', marginBottom: '15px', color: '#ff3f6c' }}>CUSTOMER POLICIES</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li><a href="#contact" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Contact Us</a></li>
-              <li><a href="#faq" style={{ color: '#a0a3bd', textDecoration: 'none' }}>FAQ</a></li>
-              <li><a href="#terms" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Terms Of Use</a></li>
-              <li><a href="#shipping" style={{ color: '#a0a3bd', textDecoration: 'none' }}>Shipping & Returns</a></li>
+
+          {/* Column 2: Customer Policies */}
+          <div className="footer-section">
+            <h3>CUSTOMER POLICIES</h3>
+            <ul>
+              <li><a href="#contact">Contact Us</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#terms">Terms Of Use</a></li>
+              <li><a href="#shipping">Shipping & Returns</a></li>
             </ul>
           </div>
-          <div>
-            <h3 style={{ fontSize: '14px', marginBottom: '15px', color: '#ff3f6c' }}>EXPERIENCE APP</h3>
-            <p style={{ color: '#a0a3bd', fontSize: '13px' }}>Get real-time order tracking and exclusive fashion offers.</p>
+
+          {/* Column 3: Contact & Office Details */}
+          <div className="footer-section">
+            <h3>OFFICE & CONTACT</h3>
+            <p className="footer-text">📍 Office: Sector 62, Noida, Uttar Pradesh</p>
+            <p className="footer-text">📞 Phone: +91 9517471194</p>
+            <p className="footer-text">✉️ Email: bhattarya4533@gmail.com</p>
           </div>
+
+          {/* Column 4: Experience App */}
+          <div className="footer-section">
+            <h3>EXPERIENCE APP</h3>
+            <p className="footer-text">Get real-time order tracking and exclusive fashion offers right on your device.</p>
+          </div>
+
         </div>
-        <div style={{ textAlign: 'center', marginTop: '30px', fontSize: '12px', color: '#7e8299' }}>
-          <p>© 2026 FashionHub Inc. All rights reserved.</p>
+
+        <div className="footer-bottom">
+          <p>© 2026 EcoBazaar Inc. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -34,7 +34,7 @@ export const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h2>🌱 EcoBazaar</h2>
+          <h2>🛒 EcoBazaar</h2>
           <p>Welcome Back! Please login to continue.</p>
         </div>
 
