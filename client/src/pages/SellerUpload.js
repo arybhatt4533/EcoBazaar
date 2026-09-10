@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logoImg from '../assets/brand.png';
+import uploadImg from '../assets/upload.png';
+import inventoryImg from '../assets/inventory.png';
+import priceImg from '../assets/price.png';
 import './SellerUpload.css';
 
 const SellerUpload = () => {
@@ -50,30 +54,51 @@ const SellerUpload = () => {
   const totalInventoryValue = sellerProducts.reduce((acc, item) => acc + Number(item.price || 0), 0);
   const totalOfferValue = sellerProducts.reduce((acc, item) => acc + Number(item.offer_price || item.price || 0), 0);
 
-  // Slides ka data
+  // Slides ka data (6-7 dynamic slides with professional Unsplash images)
   const slides = [
     {
-      tag: "🚀 GROW YOUR BUSINESS WITH ECOBAZAAR",
+      tag: "🚀 GROW YOUR BUSINESS",
       title: "Expand Your Reach & Reduce Waste",
-      desc: "Digitalize your inventory, connect with conscious buyers and local partners instantly, and scale your green business growth seamlessly.",
+      desc: "Digitalize your inventory, connect with conscious buyers instantly, and scale your green business growth seamlessly.",
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)" // Emerald Green
     },
     {
       tag: "📈 BOOST SALES & VISIBILITY",
-      title: "Reach Thousands of Eco-Friendly Customers",
-      desc: "Showcase your fashion, food, and lifestyle products to a dedicated community that values sustainability and green shopping.",
+      title: "Reach Thousands of Eco-Friendly Buyers",
+      desc: "Showcase your sustainable fashion and lifestyle products to a dedicated community that values green shopping.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)" // Royal Blue
     },
     {
       tag: "💡 SMART INVENTORY MANAGEMENT",
       title: "Manage Listings & Track Orders Easily",
-      desc: "Use our advanced dashboard tools to upload products, monitor sales performance, and optimize your daily business operations.",
+      desc: "Use our advanced dashboard tools to upload products, monitor sales performance, and optimize daily operations.",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)" // Purple
     },
     {
-      tag: "🤝 ZERO WASTE, MAXIMUM IMPACT",
+      tag: "🤝 SUSTAINABLE PARTNERSHIPS",
       title: "Partner with Green Initiatives",
-      desc: "Turn surplus inventory and sustainable items into profitable revenue streams while contributing to a cleaner environment.",
+      desc: "Turn surplus inventory and sustainable items into profitable revenue streams while cleaning the environment.",
+      image: "https://images.unsplash.com/photo-1542744094-3a3124356e3b?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #f59e0b 0%, #b45309 100%)" // Warm Amber
+    },
+    {
+      tag: "🌟 PREMIUM VENDOR NETWORK",
+      title: "Elevate Your Brand Presence",
+      desc: "Stand out in the marketplace with verified seller badges and priority listings for top eco-friendly items.",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #ec4899 0%, #be185d 100%)" // Pink/Rose
+    },
+    {
+      tag: "📊 REAL-TIME ANALYTICS",
+      title: "Track Revenue & Growth Metrics",
+      desc: "Get deep insights into customer preferences, top-selling categories, and daily earnings right from your panel.",
+      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80",
+      gradient: "linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)" // Cyan
     }
   ];
-
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Auto Slide Change (Har 4 seconds mein)
@@ -175,7 +200,9 @@ const SellerUpload = () => {
 
       {/* 1. Navbar */}
       <nav className="seller-navbar">
-        <div className="nav-brand">🌱 EcoBazaar Seller Portal</div>
+        <div className="logo-container">
+          <img src={logoImg} alt="EcoBazaar Logo" className="nav-logo-img" />
+        </div>
         <div className="nav-links">
           <a href="#dashboard">Dashboard</a>
           <a href="#expense-tracker">Expense & Tracker</a>
@@ -191,6 +218,7 @@ const SellerUpload = () => {
           <div
             key={index}
             className={`slide ${index === currentSlide ? 'active' : ''}`}
+            style={{ backgroundImage: `url(${slide.image})` }}
           >
             <div className="slider-content">
               <span>{slide.tag}</span>
@@ -199,7 +227,6 @@ const SellerUpload = () => {
             </div>
           </div>
         ))}
-
         {/* Navigation Arrows */}
         <button className="slider-btn prev-btn" onClick={prevSlide}>❮</button>
         <button className="slider-btn next-btn" onClick={nextSlide}>❯</button>
@@ -216,7 +243,7 @@ const SellerUpload = () => {
         </div>
       </header>
 
-      {/* 🌟 NEW: Expense Tracker & Inventory Financial Summary Section */}
+      {/* 🌟 Store Financial & Upload Tracker Section */}
       <section className="expense-tracker-section" id="expense-tracker">
         <div className="tracker-header">
           <h2><i className="fa-solid fa-chart-pie"></i> Store Financial & Upload Tracker</h2>
@@ -225,7 +252,9 @@ const SellerUpload = () => {
 
         <div className="tracker-cards-grid">
           <div className="tracker-card">
-            <div className="icon-box red"><i className="fa-solid fa-box-open"></i></div>
+            <div className="tracker-icon-box">
+              <img src={uploadImg} alt="Upload Icon" />
+            </div>
             <div className="tracker-info">
               <span>Total Uploaded Items</span>
               <h3>{totalItemsUploaded} Products</h3>
@@ -233,7 +262,9 @@ const SellerUpload = () => {
           </div>
 
           <div className="tracker-card">
-            <div className="icon-box pink"><i className="fa-solid fa-indian-rupee-sign"></i></div>
+            <div className="tracker-icon-box">
+              <img src={inventoryImg} alt="Inventory Icon" />
+            </div>
             <div className="tracker-info">
               <span>Total Inventory Value (MRP)</span>
               <h3>₹{totalInventoryValue.toLocaleString()}</h3>
@@ -241,7 +272,9 @@ const SellerUpload = () => {
           </div>
 
           <div className="tracker-card">
-            <div className="icon-box dark-red"><i className="fa-solid fa-tags"></i></div>
+            <div className="tracker-icon-box">
+              <img src={priceImg} alt="Price Icon" />
+            </div>
             <div className="tracker-info">
               <span>Total Selling Price Value</span>
               <h3>₹{totalOfferValue.toLocaleString()}</h3>
@@ -250,15 +283,18 @@ const SellerUpload = () => {
         </div>
       </section>
 
-      {/* Infinite Moving Ticker Tape */}
+      {/* Modern Moving Ticker Tape */}
       <div className="ticker-wrapper">
         <div className="ticker-track">
-          <div className="ticker-item"><span>💡 Tip 1</span> Eco-conscious packaging boosts customer retention by 35%!</div>
-          <div className="ticker-item"><span>🚀 Growth</span> Flash sales on organic lines increase store visibility.</div>
-          <div className="ticker-item"><span>♻️ Impact</span> Reduce textile waste by listing surplus inventory instantly.</div>
-          <div className="ticker-item"><span>💡 Tip 2</span> Fast fulfillment leads to 5-star seller ratings on EcoBazaar.</div>
-          <div className="ticker-item"><span>💡 Tip 1</span> Eco-conscious packaging boosts customer retention by 35%!</div>
-          <div className="ticker-item"><span>🚀 Growth</span> Flash sales on organic lines increase store visibility.</div>
+          <div className="ticker-item"><span>💡 Pro Tip</span> Eco-conscious packaging boosts customer retention by up to 35%!</div>
+          <div className="ticker-item"><span>🚀 Growth Boost</span> Flash sales on organic lines increase store visibility instantly.</div>
+          <div className="ticker-item"><span>♻️ Green Impact</span> Reduce textile & material waste by listing surplus inventory.</div>
+          <div className="ticker-item"><span>⭐ Seller Success</span> Fast fulfillment leads to top 5-star ratings on EcoBazaar.</div>
+          {/* Duplicate items for seamless infinite loop effect */}
+          <div className="ticker-item"><span>💡 Pro Tip</span> Eco-conscious packaging boosts customer retention by up to 35%!</div>
+          <div className="ticker-item"><span>🚀 Growth Boost</span> Flash sales on organic lines increase store visibility instantly.</div>
+          <div className="ticker-item"><span>♻️ Green Impact</span> Reduce textile & material waste by listing surplus inventory.</div>
+          <div className="ticker-item"><span>⭐ Seller Success</span> Fast fulfillment leads to top 5-star ratings on EcoBazaar.</div>
         </div>
       </div>
 

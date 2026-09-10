@@ -1,153 +1,269 @@
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:root {
+  --dashboard-bg: #ecd6c0;
+  /* Matching your warm dashboard background tone */
+  --card-bg: #fdfbf7;
+  --text-main: #2c221e;
+  --text-muted: #786861;
+  --accent-green: #10b981;
+  --accent-terracotta: #dd6b20;
+  --border-color: #e2d4c7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Full Screen Background matched with Dashboard */
+.login-master-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #cabfc0 0%, #d1e1b6 100%);
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
+  width: 100vw;
+  background: var(--dashboard-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
 }
 
-.login-card {
-  background: #f3e5d7;
-  padding: 45px 40px;
-  border-radius: 20px;
+/* Master Centered Card Wrapper */
+.login-card-container {
+  display: flex;
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  transition: transform 0.3s ease;
+  max-width: 1050px;
+  min-height: 600px;
+  background: var(--card-bg);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(44, 34, 30, 0.12);
+  border: 1px solid rgba(235, 178, 178, 0.6);
 }
 
-.login-card:hover {
-  transform: translateY(-2px);
+/* LEFT SIDE: Large Prominent Brand Showcase */
+.login-brand-panel {
+  flex: 1;
+  background: linear-gradient(135deg, #d0b9a9 0%, #b1ded4 100%);
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--border-color);
 }
 
-.login-header {
-  text-align: center;
-  margin-bottom: 25px;
+.brand-showcase-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
 }
 
-.login-header h2 {
-  font-size: 28px;
+/* Bada Logo jo card ke hisaab se prominent dikhega */
+.giant-logo-container {
+  width: 300px;
+  height: 300px;
+  background: #b1d5a5;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(221, 107, 32, 0.15);
+  border: 2px solid #fed7aa;
+  padding: 12px;
+}
+
+.giant-brand-logo {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.brand-text-block h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -1px;
+}
+
+.theme-badge {
+  font-size: 0.78rem;
   font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 8px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: #ffedd5;
+  color: #c2410c;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.brand-text-block p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* RIGHT SIDE: Form Panel */
+.login-form-panel {
+  flex: 1.1;
+  background: linear-gradient(135deg, #f7bbbb 0%, #dbd6aa 100%);
+  padding: 3.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-content-box {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-header-group h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text-main);
   letter-spacing: -0.5px;
 }
 
-.login-header p {
-  font-size: 14px;
-  color: #64748b;
-  font-weight: 500;
+.form-header-group p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
 }
 
-/* Role Switcher Tabs */
-.role-switch-container {
-  display: flex;
-  background: #f8fafc;
-  padding: 4px;
-  border-radius: 12px;
-  border: 1.5px solid #e2e8f0;
-  margin-bottom: 20px;
+/* Role Switcher Pill */
+.role-switch-pill {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f4eee6;
+  padding: 5px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
 }
 
-.role-tab {
-  flex: 1;
-  padding: 10px;
-  border: none;
+.role-btn {
   background: transparent;
-  color: #64748b;
+  border: none;
+  padding: 0.75rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  font-size: 14px;
-  border-radius: 9px;
+  color: var(--text-muted);
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.role-tab.active-role {
+.role-btn.active-buyer,
+.role-btn.active-seller {
   background: #ffffff;
-  color: #ff3f6c;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+  box-shadow: 0 4px 12px rgba(44, 34, 30, 0.08);
 }
 
-.login-form {
+/* Form Fields */
+.modern-auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.2rem;
 }
 
-.input-group {
+.form-field-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.4rem;
 }
 
-.input-group label {
-  font-size: 13px;
+.form-field-group label {
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-main);
 }
 
-.input-group input {
-  padding: 14px 16px;
-  border: 1.5px solid #e2e8f0;
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 0.95rem;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.8rem;
+  border: 1.5px solid var(--border-color);
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 0.95rem;
   outline: none;
-  transition: all 0.25s ease;
-  background: #f8fafc;
-  color: #0f172a;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.input-group input:focus {
-  border-color: #ff3f6c;
-  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.12);
   background: #ffffff;
+  color: var(--text-main);
+  transition: all 0.2s;
 }
 
-.submit-btn {
-  background: linear-gradient(135deg, #ff3f6c 0%, #e0325b 100%);
+.input-with-icon input:focus {
+  border-color: var(--accent-terracotta);
+  box-shadow: 0 0 0 4px rgba(221, 107, 32, 0.12);
+}
+
+/* Submit Action Button */
+.action-submit-btn {
+  background: linear-gradient(135deg, #f97116 0%, #f7661e 100%);
   color: white;
-  padding: 14px;
   border: none;
+  padding: 0.95rem;
   border-radius: 12px;
+  font-size: 0.98rem;
   font-weight: 700;
-  font-size: 15px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  width: 100%;
-  margin-top: 10px;
-  box-shadow: 0 4px 12px rgba(255, 63, 108, 0.3);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
+  transition: transform 0.1s, opacity 0.2s;
+  margin-top: 0.5rem;
 }
 
-.submit-btn:hover {
-  background: linear-gradient(135deg, #e0325b 0%, #c5244b 100%);
-  box-shadow: 0 6px 16px rgba(255, 63, 108, 0.4);
+.action-submit-btn:hover {
+  opacity: 0.95;
+  background: linear-gradient(135deg, #f91616 0%, #f71e1e 100%);
   transform: translateY(-1px);
 }
 
-.submit-btn:active {
-  transform: translateY(0);
-}
-
-.auth-redirect {
+.auth-footer-redirect {
   text-align: center;
-  margin-top: 25px;
-  font-size: 14px;
-  color: #64748b;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
-.auth-redirect a {
-  color: #ff3f6c;
-  font-weight: 700;
+.auth-footer-redirect a {
+  color: #ea580c;
   text-decoration: none;
-  transition: color 0.2s;
+  font-weight: 700;
 }
 
-.auth-redirect a:hover {
-  color: #e0325b;
+.auth-footer-redirect a:hover {
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .login-card-container {
+    flex-direction: column;
+  }
+
+  .login-brand-panel,
+  .login-form-panel {
+    padding: 2.5rem 2rem;
+  }
 }
