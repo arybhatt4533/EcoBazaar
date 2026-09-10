@@ -105,7 +105,7 @@ body {
 .nav-left a.logo img,
 .nav-left>a:first-child img,
 .logo-container img {
-    height: 46px !important;
+    height: 70px !important;
     /* Navbar ke hisab se perfect height */
     width: auto !important;
     object-fit: contain;

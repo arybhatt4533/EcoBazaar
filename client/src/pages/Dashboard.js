@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logoImg from '../components/logo.png';
+import logoImg from './brand-logo.png';
 import './Dashboard.css';
 
 export const Dashboard = () => {
@@ -218,7 +218,7 @@ export const Dashboard = () => {
       <header className="eco-header">
         <div className="nav-left">
           <div className="logo-container">
-            <img src="/logo.png" alt="EcoBazaar Logo" />
+            <img src={logoImg} alt="EcoBazaar Logo" className="nav-logo-img" />
           </div>
           <ul className="nav-links">
             <li><Link to="/dashboard">Men</Link></li>
