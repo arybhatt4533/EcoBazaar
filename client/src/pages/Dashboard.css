@@ -84,19 +84,37 @@ body {
     gap: 40px;
 }
 
-/* Clean Professional Logo */
+/* Clean Professional Logo Container */
 .eco-header .logo,
 .nav-left h1,
 .nav-left a.logo,
-.nav-left>a:first-child {
-    font-size: 24px !important;
-    font-weight: 800 !important;
-    color: #ff3f6c !important;
-    text-decoration: none !important;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin: 0 !important;
+.nav-left>a:first-child,
+.logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: none;
+    border: none;
     padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+/* Navbar Logo Image Styling */
+.eco-header .logo img,
+.nav-left a.logo img,
+.nav-left>a:first-child img,
+.logo-container img {
+    height: 46px !important;
+    /* Navbar ke hisab se perfect height */
+    width: auto !important;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.logo-container img:hover {
+    transform: scale(1.04);
 }
 
 /* Navigation Links */
@@ -297,142 +315,258 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Promo Grid */
+/* --- Myntra Style WOW Deals Slider Section --- */
 .promo-slider-section {
-    width: 100%;
-    margin-bottom: 25px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.promo-section-title {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #282c3f;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .promo-slider-track {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
     gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+}
+
+/* Scrollbar hide karne ke liye clean look */
+.promo-slider-track::-webkit-scrollbar {
+    height: 6px;
+}
+
+.promo-slider-track::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
 }
 
 .promo-banner-card {
+    min-width: 190px;
+    width: 190px;
+    height: 270px;
+    flex-shrink: 0;
     border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #fff;
-    min-height: 160px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
     overflow: hidden;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    scroll-snap-align: start;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .promo-banner-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
 
-.promo-bg-1 {
-    background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+/* Card ka upar ka image & text overlay wala hissa */
+.promo-card-top {
+    position: relative;
+    height: 190px;
+    width: 100%;
 }
 
-.promo-bg-2 {
-    background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%);
-    color: #064e3b;
+.promo-card-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.promo-bg-3 {
-    background: linear-gradient(135deg, #fed7aa 0%, #fb923c 100%);
-    color: #7c2d12;
+.promo-overlay-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 12px;
+    color: #ffffff;
+    text-align: center;
 }
 
-.promo-text-content {
-    flex: 1;
-    padding-right: 10px;
+.promo-overlay-content h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 2px 0;
 }
 
-.promo-tag {
+.promo-overlay-content p {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+    color: #38bdf8;
+}
+
+/* Niche wali brand logo strip */
+.promo-brand-footer {
+    height: 50px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 8px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.promo-brand-footer span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: 0.5px;
+}
+
+.promo-brand-footer .brand-divider {
     font-size: 10px;
-    font-weight: 800;
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* --- Modern Split Bento Grid Banners --- */
+.bento-banner-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .bento-banner-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bento-main-hero {
+    position: relative;
+    height: 380px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.bento-main-hero img,
+.bento-sub-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.bento-main-hero:hover img,
+.bento-sub-banner:hover img {
+    transform: scale(1.05);
+}
+
+.bento-side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bento-sub-banner {
+    position: relative;
+    height: 182px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.bento-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    color: #ffffff;
+}
+
+.bento-overlay span {
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    background: rgba(0, 0, 0, 0.15);
-    padding: 3px 8px;
+    background: #ff3f6c;
+    padding: 4px 10px;
     border-radius: 4px;
-    display: inline-block;
+    width: max-content;
     margin-bottom: 8px;
 }
 
-.promo-text-content h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    line-height: 1.2;
+.bento-overlay h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
 }
 
-.promo-highlight {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-.promo-img-box {
-    width: 110px;
-    height: 110px;
-    flex-shrink: 0;
-}
-
-.promo-img-box img {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.bento-overlay p {
+    font-size: 13px;
+    margin: 0;
+    opacity: 0.9;
 }
 
 /* ==========================================
-   TICKER TAPE
+   GLASSMORPHISM USP BAR CSS
    ========================================== */
-.ticker-wrapper {
-    width: 100%;
-    overflow: hidden;
-    background: linear-gradient(135deg, #c9b953 0%, #bea085 100%);
-    color: #d32525;
-    padding: 14px 0;
-    box-shadow: 0 4px 15px rgba(45, 106, 79, 0.2);
+.glass-usp-bar {
+    max-width: 1160px;
+    margin: -35px auto 30px auto;
+    /* Banner ke theek niche halka sa overlap ya attached rakhne ke liye */
     position: relative;
-    margin: 15px 0 25px 0;
-    border-radius: 8px;
-}
-
-.ticker-track {
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 14px;
+    padding: 18px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
-    width: max-content;
-    animation: marqueeScroll 28s linear infinite;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.ticker-track:hover {
-    animation-play-state: paused;
-}
-
-.ticker-item {
+.usp-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 40px;
+    gap: 10px;
     font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ticker-item span {
-    background: #ff3f6c;
-    color: #ffffff;
-    padding: 3px 10px;
-    font-size: 12px;
     font-weight: 700;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(255, 63, 108, 0.4);
+    color: #282c3f;
+    letter-spacing: 0.3px;
 }
 
-@keyframes marqueeScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+.usp-icon {
+    font-size: 20px;
 }
 
 /* Filter & Search Section Wrapper */
@@ -642,9 +776,17 @@ body {
 }
 
 @keyframes pulseHeart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.35); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.35);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* ==========================================
@@ -733,7 +875,11 @@ body {
     font-weight: 500;
 }
 
-/* Feature Banners & Sections */
+/* ==========================================
+   ECOBAZAAR - COMPLETE CUSTOM STYLES
+   ========================================== */
+
+/* 1. Feature Banners & Sections */
 .welcome-banner {
     background: linear-gradient(135deg, #52d957 0%, #98d16c 100%);
     color: #ffffff;
@@ -769,6 +915,66 @@ body {
     border: 1px solid rgba(46, 38, 196, 0.726);
 }
 
+/* 2. Floating Auto-Hiding Welcome Popup Styles */
+.welcome-popup-banner {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+    color: #ffffff;
+    padding: 18px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+    max-width: 400px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+    }
+}
+
+.welcome-popup-text h1 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.welcome-popup-text p {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.welcome-popup-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* 3. Flash Deals Section */
 .flash-deals-section {
     background: linear-gradient(135deg, #e3db80 0%, #ec8869 100%);
     color: #ffffff;
@@ -814,6 +1020,7 @@ body {
     letter-spacing: 1px;
 }
 
+/* 4. Testimonials Section */
 .testimonials-section {
     margin: 40px auto;
     max-width: 1200px;
@@ -838,6 +1045,130 @@ body {
 
 .testimonial-card:hover {
     transform: translateY(-4px);
+}
+
+/* 5. Modern Split Bento Grid Banners */
+.bento-banner-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .bento-banner-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bento-main-hero {
+    position: relative;
+    height: 380px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.bento-main-hero img,
+.bento-sub-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.bento-main-hero:hover img,
+.bento-sub-banner:hover img {
+    transform: scale(1.05);
+}
+
+.bento-side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bento-sub-banner {
+    position: relative;
+    height: 182px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.bento-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    color: #ffffff;
+}
+
+.bento-overlay span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #ff3f6c;
+    padding: 4px 10px;
+    border-radius: 4px;
+    width: max-content;
+    margin-bottom: 8px;
+}
+
+.bento-overlay h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+}
+
+.bento-overlay p {
+    font-size: 13px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* 6. Glassmorphism USP Bar */
+.glass-usp-bar {
+    max-width: 1160px;
+    margin: -35px auto 30px auto;
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 14px;
+    padding: 18px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.usp-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #282c3f;
+    letter-spacing: 0.3px;
+}
+
+.usp-icon {
+    font-size: 20px;
 }
 
 /* Quick View Modal */
@@ -925,18 +1256,37 @@ body {
 }
 
 @keyframes fadeInModal {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scaleUpModal {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ==========================================
@@ -1033,6 +1383,7 @@ body {
         margin: 12px auto;
     }
 }
+
 /* --- Product Badge Styling --- */
 .product-badge {
     position: absolute;
@@ -1068,6 +1419,7 @@ body {
     background-color: #00acc1;
     color: #ffffff;
 }
+
 /* --- Weather / Season Collection Styles --- */
 .weather-section {
     max-width: 1200px;
@@ -1121,7 +1473,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.1));
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1));
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

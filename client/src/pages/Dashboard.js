@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logoImg from '../components/logo.png';
 import './Dashboard.css';
 
 export const Dashboard = () => {
@@ -9,6 +10,16 @@ export const Dashboard = () => {
 
   // --- 1. User Greeting State ---
   const [userName, setUserName] = useState('Arybhatt');
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  useEffect(() => {
+    // 3 seconds (3000 ms) ke baad popup hide ho jayega
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // --- 2. Wishlist State & Logic ---
   const [wishlist, setWishlist] = useState(() => {
@@ -63,15 +74,20 @@ export const Dashboard = () => {
       subtitle: "Flat 40% OFF | Elegant Kurtas & Dresses",
       image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop&q=80"
     },
-     {
+    {
       title: "CASUAL WEAR COLLECTION",
       subtitle: "Flat 30% OFF | Elegant Casual Outfits",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS8X38EO7TBcQ2bQn9kLJ5G0VkAH7G2f-l00gPFKNJTw&s=10"
     },
-     {
-      title: "OFFiCIAL WEAR COLLECTION",
+    {
+      title: "OFFICIAL WEAR COLLECTION",
       subtitle: "Flat 30% OFF | Elegant Office Outfits",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVJxJwaGZVB3nkQ9olBTziRIcCsFmBgwIROvDFw1eotg&s=10"
+    },
+    {
+      title: "HOT FASHION ",
+      subtitle: "50% - 80% Off | Top Clothing Brands",
+      image: "https://media.istockphoto.com/id/637230232/photo/girl-on-the-rooftop.jpg?s=612x612&w=0&k=20&c=eiCtSKFLJc5AG1rekQjk7XCMJ5irePGQJOkMNog5HZk="
     }
   ];
 
@@ -201,9 +217,9 @@ export const Dashboard = () => {
       {/* Navbar */}
       <header className="eco-header">
         <div className="nav-left">
-          <Link to="/dashboard" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-            <span style={{ fontSize: '24px', fontWeight: '700', color: '#ff3f6c', letterSpacing: '0.5px' }}>EcoBazaar</span>
-          </Link>
+          <div className="logo-container">
+            <img src="/logo.png" alt="EcoBazaar Logo" />
+          </div>
           <ul className="nav-links">
             <li><Link to="/dashboard">Men</Link></li>
             <li><Link to="/dashboard">Women</Link></li>
@@ -251,16 +267,18 @@ export const Dashboard = () => {
           </Link>
         </div>
       </header>
-      {/* Feature 1: Welcome Banner */}
-      <div className="welcome-banner">
-        <div className="welcome-text">
-          <h1>Welcome back, {userName}! 🌱</h1>
-          <p>Explore our latest eco-friendly collection built for a sustainable future.</p>
+      {/* Feature 1: Auto-Hiding Welcome Popup Banner */}
+      {showWelcome && (
+        <div className="welcome-popup-banner">
+          <div className="welcome-popup-text">
+            <h1>Welcome back, {userName}! 🛒</h1>
+            <p>Explore our latest eco-friendly collection.</p>
+          </div>
+          <div className="welcome-popup-badge">
+            <span>🤵🏼 Member</span>
+          </div>
         </div>
-        <div className="welcome-badge">
-          <span>🌿 EcoBazaar Member</span>
-        </div>
-      </div>
+      )}
 
       {/* Main Container */}
       <div className="container">
@@ -317,34 +335,108 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        {/* Multi-Card Promotional Offer Grid */}
+        {/* Myntra Style WOW Deals Slider Section */}
         <div className="promo-slider-section">
-          <div className="promo-slider-track" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
-            <div className="promo-banner-card" style={{ background: 'linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%)', borderRadius: '12px', padding: '20px', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <span className="promo-tag" style={{ background: 'rgba(0,0,0,0.15)', padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>TRENDING</span>
-                <h3 style={{ fontSize: '18px', margin: '8px 0 4px 0' }}>Casual Denims</h3>
-                <p style={{ fontSize: '14px', fontWeight: '600' }}>Min. <strong>50% OFF</strong></p>
+          <div className="promo-section-title">
+            <span>🤩</span> WOW DEALS <span style={{ fontSize: '13px', fontWeight: '400', color: '#64748b' }}>| Big Brands, Even Bigger Savings</span>
+          </div>
+
+          <div className="promo-slider-track">
+
+            {/* Card 1: Footwear */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Casual Sneakers" />
+                <div className="promo-overlay-content">
+                  <h3>Casual-Day Picks</h3>
+                  <p>MIN. 50% OFF</p>
+                </div>
               </div>
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQXi6VWqnq3OnTXQIWj_SEJjNralIEPPcGP7t_Vavfuw&s=10" alt="Denim" style={{ width: '110px', height: '110px', borderRadius: '8px', objectFit: 'cover' }} />
+              <div className="promo-brand-footer">
+                <span>KAKA RABBIT</span>
+                <span className="brand-divider">&</span>
+                <span>U.S. POLO</span>
+              </div>
             </div>
 
-            <div className="promo-banner-card" style={{ background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)', borderRadius: '12px', padding: '20px', color: '#064e3b', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <span className="promo-tag" style={{ background: 'rgba(6, 78, 59, 0.15)', padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>WINTER WEAR</span>
-                <h3 style={{ fontSize: '18px', margin: '8px 0 4px 0' }}>Stylish Jackets</h3>
-                <p style={{ fontSize: '14px', fontWeight: '600' }}>Starting at <strong>₹699</strong></p>
+            {/* Card 2: Watches */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" alt="Precision Watches" />
+                <div className="promo-overlay-content">
+                  <h3>Precision Crafted</h3>
+                  <p>20-50% OFF</p>
+                </div>
               </div>
-              <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300" alt="Jacket" style={{ width: '110px', height: '110px', borderRadius: '8px', objectFit: 'cover' }} />
+              <div className="promo-brand-footer">
+                <span>CASIO</span>
+                <span className="brand-divider">&</span>
+                <span>TITAN</span>
+              </div>
             </div>
 
-            <div className="promo-banner-card" style={{ background: 'linear-gradient(135deg, #fed7aa 0%, #fb923c 100%)', borderRadius: '12px', padding: '20px', color: '#7c2d12', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <span className="promo-tag" style={{ background: 'rgba(124, 45, 18, 0.15)', padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>FOOTWEAR</span>
-                <h3 style={{ fontSize: '18px', margin: '8px 0 4px 0' }}>Sneakers & Shoes</h3>
-                <p style={{ fontSize: '14px', fontWeight: '600' }}>Up to <strong>70% OFF</strong></p>
+            {/* Card 3: Skincare / Beauty */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300" alt="Herbal Bliss" />
+                <div className="promo-overlay-content">
+                  <h3>Herbal Bliss</h3>
+                  <p>MIN. 25% OFF</p>
+                </div>
               </div>
-              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Shoes" style={{ width: '110px', height: '110px', borderRadius: '8px', objectFit: 'cover' }} />
+              <div className="promo-brand-footer">
+                <span>KAMA</span>
+                <span className="brand-divider">&</span>
+                <span>BIOTIQUE</span>
+              </div>
+            </div>
+
+            {/* Card 4: Sportswear */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_J30XhvqiKRgmVYef9BPBhtqoozZXhlLTT11syiWSKQ&s" alt="Sportswear" />
+                <div className="promo-overlay-content">
+                  <h3>Active Wear</h3>
+                  <p>MIN. 45% OFF</p>
+                </div>
+              </div>
+              <div className="promo-brand-footer">
+                <span>adidas</span>
+                <span className="brand-divider">&</span>
+                <span>PUMA</span>
+              </div>
+            </div>
+
+            {/* Card 5: Home & Kitchen */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=300" alt="Cookware" />
+                <div className="promo-overlay-content">
+                  <h3>Durable Cookware</h3>
+                  <p>Under ₹1599</p>
+                </div>
+              </div>
+              <div className="promo-brand-footer">
+                <span>Pigeon</span>
+                <span className="brand-divider">&</span>
+                <span>Prestige</span>
+              </div>
+            </div>
+
+            {/* Card 6: Luxury Fashion */}
+            <div className="promo-banner-card">
+              <div className="promo-card-top">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-QGNtUbQpftsXNW5tvyojEPd6G35EHSaQ4AXa4IrX6g&s=10" alt="Luxury Fashion" />
+                <div className="promo-overlay-content">
+                  <h3>Luxury Fashion</h3>
+                  <p>MIN. 30% OFF</p>
+                </div>
+              </div>
+              <div className="promo-brand-footer">
+                <span>ZARA</span>
+                <span className="brand-divider">&</span>
+                <span>H&M</span>
+              </div>
             </div>
           </div>
         </div>
@@ -363,14 +455,52 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        {/* Sliding Ticker Tape */}
-        <div className="ticker-wrapper" style={{ background: '#282c3f', color: '#fff', padding: '12px 0', borderRadius: '8px', overflow: 'hidden', margin: '20px 0' }}>
-          <div className="ticker-track" style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'marqueeScroll 25s linear infinite' }}>
-            <div className="ticker-item" style={{ padding: '0 30px' }}>⚡ Flat Extra 20% OFF on First Order Use Code: <span>FASHION20</span></div>
-            <div className="ticker-item" style={{ padding: '0 30px' }}>🚚 Free Shipping on All Prepaid Orders Above ₹499</div>
-            <div className="ticker-item" style={{ padding: '0 30px' }}>🔄 Easy 7 Days Return & Exchange Available</div>
-            <div className="ticker-item" style={{ padding: '0 30px' }}>⚡ Flat Extra 20% OFF on First Order Use Code: <span>FASHION20</span></div>
-            <div className="ticker-item" style={{ padding: '0 30px' }}>🚚 Free Shipping on All Prepaid Orders Above ₹499</div>
+        <div className="bento-banner-container">
+          {/* Left Big Main Hero Banner */}
+          <div className="bento-main-hero" onClick={() => navigate('/category/ethnic')}>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNoBRet5XKltaEQIVdfumVF93inQ87zOj0YkJeRp5ZpA&s=10" alt="Sustainable Ethnic Wear" />
+            <div className="bento-overlay">
+              <span>✨ Exclusive Collection</span>
+              <h2>Sustainably Crafted Ethnic Wear</h2>
+              <p>Flat 40% OFF on Elegant Kurtas & Handcrafted Dresses</p>
+            </div>
+          </div>
+
+          {/* Right Stacked Mini Banners */}
+          <div className="bento-side-stack">
+            <div className="bento-sub-banner" onClick={() => navigate('/category/denims')}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMvlvqkrDfijKqmMrIZGDBajcpQxcV47xuU5pDoSGHKA&s=10" alt="Casual Denims" />
+              <div className="bento-overlay" style={{ padding: '16px' }}>
+                <span style={{ background: '#2e7d32' }}>🌿 Eco Denims</span>
+                <h3 style={{ fontSize: '16px', margin: '0 0 2px 0' }}>Casual Denims</h3>
+                <p style={{ fontSize: '11px' }}>Min. 50% OFF</p>
+              </div>
+            </div>
+
+            <div className="bento-sub-banner" onClick={() => navigate('/category/jackets')}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStavAM-28gGdSEexJ-hZAyr6IfkxcTVO-ZXd4UsfOg5g&s=10://images.unsplash.com/photo-1551028719-00167b16eac5?w=500" alt="Winter Jackets" />
+              <div className="bento-overlay" style={{ padding: '16px' }}>
+                <span style={{ background: '#00acc1' }}>❄️ Earth Knit</span>
+                <h3 style={{ fontSize: '16px', margin: '0 0 2px 0' }}>Stylish Jackets</h3>
+                <p style={{ fontSize: '11px' }}>Starting at ₹699</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- Glassmorphism USP Floating Strip --- */}
+        <div className="glass-usp-bar">
+          <div className="usp-item">
+            <span className="usp-icon">🌱</span>
+            <span>100% Organic Cotton</span>
+          </div>
+          <div className="usp-item">
+            <span className="usp-icon">♻️</span>
+            <span>Zero Plastic Packaging</span>
+          </div>
+          <div className="usp-item">
+            <span className="usp-icon">🔄</span>
+            <span>7-Days Easy Return</span>
           </div>
         </div>
         {/* Premium Search, Category Filter & Sorting Bar */}
@@ -480,7 +610,7 @@ export const Dashboard = () => {
                     </div>
 
                     <div style={{ display: 'flex', gap: '8px' }}>
-                    
+
                       {/* --- 1. Add to Cart Button --- */}
                       <button
                         onClick={(e) => {
