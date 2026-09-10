@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logoImg from '../assets/brand.png';
 import './CheckoutCart.css';
 
 export const CheckoutCart = () => {
@@ -189,7 +190,7 @@ export const CheckoutCart = () => {
       {/* Top Header Navigation */}
       <header className="checkout-header">
         <div className="brand-logo" onClick={() => navigate('/')}>
-          <h2>🛒 EcoStore</h2>
+          <img src={logoImg} alt="EcoStore Logo" />
         </div>
         <div className="header-actions">
           <button className="nav-btn" onClick={() => setCurrentStep(4)}>
