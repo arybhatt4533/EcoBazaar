@@ -13,120 +13,316 @@ export const Signup = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
+
         try {
-            await axios.post('http://localhost:5000/api/auth/register', {
-                name,
-                email,
-                password,
-                role
-            });
+            await axios.post(
+                'http://localhost:5000/api/auth/register',
+                {
+                    name,
+                    email,
+                    password,
+                    role
+                }
+            );
+
             alert('Registration successful! Please login.');
             navigate('/login');
+
         } catch (err) {
-            alert(err.response?.data?.error || 'Registration failed');
+            alert(
+                err.response?.data?.error ||
+                'Registration failed'
+            );
         }
     };
 
     return (
-        <div className="login-master-wrapper">
-            <div className="login-card-container">
+        <div className="signup-page">
 
-                {/* Left Side: Large Prominent Brand Showcase */}
-                <div className="login-brand-panel">
-                    <div className="brand-showcase-content">
-                        <div className="giant-logo-container">
-                            <img src={brandLogo} alt="EcoBazaar Logo" className="giant-brand-logo" />
+            <div className="signup-card">
+
+                {/* =========================
+                    LEFT BRAND SECTION
+                ========================== */}
+
+                <div className="signup-brand-panel">
+
+                    <div className="signup-brand-content">
+
+                        <div className="signup-logo-container">
+                            <img
+                                src={brandLogo}
+                                alt="EcoBazaar Logo"
+                                className="signup-brand-logo"
+                            />
                         </div>
 
-                        <div className="brand-text-block">
+                        <div className="signup-brand-text">
+
+                            <div className="signup-mini-label">
+                                🌿 WELCOME TO
+                            </div>
+
                             <h1>EcoBazaar</h1>
-                            <span className="theme-badge">Sustainable Marketplace</span>
-                            <p>Join our community of eco-conscious buyers and green sellers. Build a sustainable future with us.</p>
-                        </div>
-                    </div>
-                </div>
 
-                {/* Right Side: Clean Dashboard-Aligned Signup Form Panel */}
-                <div className="login-form-panel">
-                    <div className="form-content-box">
-                        <div className="form-header-group">
-                            <h2>Create Account</h2>
-                            <p>Get started with your eco-friendly journey.</p>
-                        </div>
+                            <span className="signup-badge">
+                                Sustainable Marketplace
+                            </span>
 
-                        {/* Role Switcher Pill Tabs */}
-                        <div className="role-switch-pill">
-                            <button
-                                type="button"
-                                className={`role-btn ${role === 'buyer' ? 'active-buyer' : ''}`}
-                                onClick={() => setRole('buyer')}
-                            >
-                                🛒 Buyer Portal
-                            </button>
-                            <button
-                                type="button"
-                                className={`role-btn ${role === 'seller' ? 'active-seller' : ''}`}
-                                onClick={() => setRole('seller')}
-                            >
-                                🏪 Seller Portal
-                            </button>
+                            <p>
+                                Join a community that believes every
+                                purchase can make a positive impact
+                                on our planet.
+                            </p>
+
                         </div>
 
-                        <form onSubmit={handleSignup} className="modern-auth-form">
-                            <div className="form-field-group">
-                                <label>Full Name</label>
-                                <div className="input-with-icon">
-                                    <span className="field-icon">👤</span>
-                                    <input
-                                        type="text"
-                                        placeholder="John Doe"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
+
+                        {/* Benefits */}
+
+                        <div className="signup-benefits">
+
+                            <div className="signup-benefit">
+                                <span>🌱</span>
+                                <div>
+                                    <strong>Shop Green</strong>
+                                    <small>Eco-friendly products</small>
                                 </div>
                             </div>
 
-                            <div className="form-field-group">
+                            <div className="signup-benefit">
+                                <span>🤝</span>
+                                <div>
+                                    <strong>Join Community</strong>
+                                    <small>Connect with conscious people</small>
+                                </div>
+                            </div>
+
+                            <div className="signup-benefit">
+                                <span>♻️</span>
+                                <div>
+                                    <strong>Make an Impact</strong>
+                                    <small>Choose a greener future</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {/* =========================
+                    RIGHT SIGNUP SECTION
+                ========================== */}
+
+                <div className="signup-form-panel">
+
+                    <div className="signup-form-card">
+
+                        {/* Header */}
+
+                        <div className="signup-header">
+
+                            <span className="signup-welcome">
+                                ✦ Let's get started
+                            </span>
+
+                            <h2>
+                                Create your
+                                <span> account</span>
+                            </h2>
+
+                            <p>
+                                Start your sustainable journey
+                                with EcoBazaar today.
+                            </p>
+
+                        </div>
+
+
+                        {/* Role Selection */}
+
+                        <div className="signup-role-box">
+
+                            <div className="signup-role-title">
+                                I want to join as
+                            </div>
+
+                            <div className="signup-role-switch">
+
+                                <button
+                                    type="button"
+                                    className={
+                                        `signup-role-btn ${
+                                            role === 'buyer'
+                                                ? 'signup-active'
+                                                : ''
+                                        }`
+                                    }
+                                    onClick={() => setRole('buyer')}
+                                >
+                                    <span>🛒</span>
+                                    <div>
+                                        <strong>Buyer</strong>
+                                        <small>Shop products</small>
+                                    </div>
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    className={
+                                        `signup-role-btn ${
+                                            role === 'seller'
+                                                ? 'signup-active'
+                                                : ''
+                                        }`
+                                    }
+                                    onClick={() => setRole('seller')}
+                                >
+                                    <span>🏪</span>
+                                    <div>
+                                        <strong>Seller</strong>
+                                        <small>Sell products</small>
+                                    </div>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Form */}
+
+                        <form
+                            onSubmit={handleSignup}
+                            className="signup-form"
+                        >
+
+                            {/* Name */}
+
+                            <div className="signup-field">
+
+                                <label>Full Name</label>
+
+                                <div className="signup-input">
+
+                                    <span>👤</span>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your full name"
+                                        value={name}
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
+                                        required
+                                    />
+
+                                </div>
+
+                            </div>
+
+
+                            {/* Email */}
+
+                            <div className="signup-field">
+
                                 <label>Email Address</label>
-                                <div className="input-with-icon">
-                                    <span className="field-icon">📧</span>
+
+                                <div className="signup-input">
+
+                                    <span>✉️</span>
+
                                     <input
                                         type="email"
                                         placeholder="name@example.com"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
                                         required
                                     />
+
                                 </div>
+
                             </div>
 
-                            <div className="form-field-group">
-                                <label>Password</label>
-                                <div className="input-with-icon">
-                                    <span className="field-icon">🔒</span>
+
+                            {/* Password */}
+
+                            <div className="signup-field">
+
+                                <div className="signup-label-row">
+                                    <label>Password</label>
+
+                                    <span>
+                                        8+ characters recommended
+                                    </span>
+                                </div>
+
+                                <div className="signup-input">
+
+                                    <span>🔒</span>
+
                                     <input
                                         type="password"
-                                        placeholder="••••••••"
+                                        placeholder="Create a strong password"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
                                         required
                                     />
+
                                 </div>
+
                             </div>
 
-                            <button type="submit" className="action-submit-btn">
-                                {role === 'seller' ? 'Register as Seller ➔' : 'Create Buyer Account ➔'}
+
+                            {/* Submit */}
+
+                            <button
+                                type="submit"
+                                className="signup-submit"
+                            >
+
+                                <span>
+                                    {role === 'seller'
+                                        ? 'Create Seller Account'
+                                        : 'Create Buyer Account'
+                                    }
+                                </span>
+
+                                <b>→</b>
+
                             </button>
+
                         </form>
 
-                        <div className="auth-footer-redirect">
-                            <p>Already have an account? <Link to="/login">Login</Link></p>
+
+                        {/* Login Redirect */}
+
+                        <div className="signup-footer">
+
+                            <span>
+                                Already part of EcoBazaar?
+                            </span>
+
+                            <Link to="/login">
+                                Sign in
+                            </Link>
+
                         </div>
+
                     </div>
+
                 </div>
 
             </div>
+
         </div>
     );
 };

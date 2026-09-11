@@ -12,109 +12,369 @@ export const Login = () => {
 
   const handleAuth = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post(
+        'http://localhost:5000/api/auth/login',
+        {
+          email,
+          password
+        }
+      );
 
       if (res.data.user) {
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        localStorage.setItem(
+          'user',
+          JSON.stringify(res.data.user)
+        );
+
         const userRole = res.data.user.role || role;
+
         if (userRole === 'seller' || role === 'seller') {
           navigate('/seller');
         } else {
           navigate('/dashboard');
         }
       }
+
     } catch (err) {
-      alert(err.response?.data?.error || 'Authentication failed. Please check your credentials.');
+      alert(
+        err.response?.data?.error ||
+        'Authentication failed. Please check your credentials.'
+      );
     }
   };
 
   return (
-    <div className="login-master-wrapper">
-      <div className="login-card-container">
+    <div className="login-page">
 
-        {/* Left Side: Large Prominent Brand Showcase matching Dashboard Theme */}
-        <div className="login-brand-panel">
-          <div className="brand-showcase-content">
-            <div className="giant-logo-container">
-              <img src={brandLogo} alt="EcoBazaar Logo" className="giant-brand-logo" />
+      <div className="login-card">
+
+        {/* ================= LEFT BRAND SECTION ================= */}
+
+        <div className="login-brand-section">
+
+          <div className="login-brand-content">
+
+            <div className="login-logo-wrapper">
+              <img
+                src={brandLogo}
+                alt="EcoBazaar Logo"
+                className="login-logo"
+              />
             </div>
 
-            <div className="brand-text-block">
+            <div className="login-brand-heading">
+
+              <span className="login-small-title">
+                🌿 WELCOME BACK TO
+              </span>
+
               <h1>EcoBazaar</h1>
-              <span className="theme-badge">Sustainable Marketplace</span>
-              <p>Manage your eco-friendly store, track real-time green metrics, and connect with conscious buyers seamlessly.</p>
+
+              <div className="login-badge">
+                <span>✦</span>
+                Sustainable Marketplace
+              </div>
+
+              <p>
+                Your sustainable shopping journey starts
+                here. Discover eco-friendly products and
+                connect with conscious communities.
+              </p>
+
             </div>
+
+            {/* Feature cards */}
+
+            <div className="login-features">
+
+              <div className="login-feature">
+
+                <div className="login-feature-icon">
+                  🌱
+                </div>
+
+                <div>
+                  <strong>Shop Sustainably</strong>
+                  <span>Better choices for our planet</span>
+                </div>
+
+              </div>
+
+              <div className="login-feature">
+
+                <div className="login-feature-icon">
+                  ♻️
+                </div>
+
+                <div>
+                  <strong>Make an Impact</strong>
+                  <span>Every purchase makes a difference</span>
+                </div>
+
+              </div>
+
+              <div className="login-feature">
+
+                <div className="login-feature-icon">
+                  🤝
+                </div>
+
+                <div>
+                  <strong>Green Community</strong>
+                  <span>Connect with conscious people</span>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
+
+          <div className="login-brand-bottom">
+            <span>🌍</span>
+            <span>Building a greener tomorrow, together.</span>
+          </div>
+
         </div>
 
-        {/* Right Side: Clean Dashboard-Aligned Form Panel */}
-        <div className="login-form-panel">
-          <div className="form-content-box">
-            <div className="form-header-group">
-              <h2>Welcome Back</h2>
-              <p>Sign in to continue to your dashboard workspace.</p>
+
+        {/* ================= RIGHT LOGIN SECTION ================= */}
+
+        <div className="login-form-section">
+
+          <div className="login-form-container">
+
+            {/* Header */}
+
+            <div className="login-header">
+
+              <span className="login-header-label">
+                ✦ SECURE ACCESS
+              </span>
+
+              <h2>
+                Welcome
+                <span> back!</span>
+              </h2>
+
+              <p>
+                Sign in to continue your sustainable
+                journey with EcoBazaar.
+              </p>
+
             </div>
 
-            {/* Role Switcher Tabs */}
-            <div className="role-switch-pill">
-              <button
-                type="button"
-                className={`role-btn ${role === 'buyer' ? 'active-buyer' : ''}`}
-                onClick={() => setRole('buyer')}
-              >
-                🛒 Buyer Portal
-              </button>
-              <button
-                type="button"
-                className={`role-btn ${role === 'seller' ? 'active-seller' : ''}`}
-                onClick={() => setRole('seller')}
-              >
-                🏪 Seller Portal
-              </button>
+
+            {/* Role Selection */}
+
+            <div className="login-role-section">
+
+              <div className="login-role-label">
+                Continue as
+              </div>
+
+              <div className="login-role-switch">
+
+                <button
+                  type="button"
+                  className={`login-role-btn ${
+                    role === 'buyer'
+                      ? 'login-role-active'
+                      : ''
+                  }`}
+                  onClick={() => setRole('buyer')}
+                >
+
+                  <span className="login-role-icon">
+                    🛒
+                  </span>
+
+                  <span className="login-role-info">
+                    <strong>Buyer</strong>
+                    <small>Shop products</small>
+                  </span>
+
+                  {role === 'buyer' && (
+                    <span className="login-check">
+                      ✓
+                    </span>
+                  )}
+
+                </button>
+
+
+                <button
+                  type="button"
+                  className={`login-role-btn ${
+                    role === 'seller'
+                      ? 'login-role-active'
+                      : ''
+                  }`}
+                  onClick={() => setRole('seller')}
+                >
+
+                  <span className="login-role-icon">
+                    🏪
+                  </span>
+
+                  <span className="login-role-info">
+                    <strong>Seller</strong>
+                    <small>Manage store</small>
+                  </span>
+
+                  {role === 'seller' && (
+                    <span className="login-check">
+                      ✓
+                    </span>
+                  )}
+
+                </button>
+
+              </div>
+
             </div>
 
-            <form onSubmit={handleAuth} className="modern-auth-form">
-              <div className="form-field-group">
+
+            {/* Login Form */}
+
+            <form
+              onSubmit={handleAuth}
+              className="login-form"
+            >
+
+              {/* Email */}
+
+              <div className="login-field">
+
                 <label>Email Address</label>
-                <div className="input-with-icon">
-                  <span className="field-icon">📧</span>
+
+                <div className="login-input-wrapper">
+
+                  <span className="login-input-icon">
+                    ✉️
+                  </span>
+
                   <input
                     type="email"
                     placeholder="name@example.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                      setEmail(e.target.value)
+                    }
                     required
                   />
+
                 </div>
+
               </div>
 
-              <div className="form-field-group">
-                <label>Password</label>
-                <div className="input-with-icon">
-                  <span className="field-icon">🔒</span>
+
+              {/* Password */}
+
+              <div className="login-field">
+
+                <div className="login-label-row">
+
+                  <label>Password</label>
+
+                  <button
+                    type="button"
+                    className="login-forgot"
+                    onClick={() =>
+                      alert('Password recovery coming soon.')
+                    }
+                  >
+                    Forgot password?
+                  </button>
+
+                </div>
+
+                <div className="login-input-wrapper">
+
+                  <span className="login-input-icon">
+                    🔒
+                  </span>
+
                   <input
                     type="password"
-                    placeholder="••••••••"
+                    placeholder="Enter your password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) =>
+                      setPassword(e.target.value)
+                    }
                     required
                   />
+
                 </div>
+
               </div>
 
-              <button type="submit" className="action-submit-btn">
-                {role === 'seller' ? 'Sign In as Seller ➔' : 'Sign In to Dashboard ➔'}
+
+              {/* Submit */}
+
+              <button
+                type="submit"
+                className="login-submit"
+              >
+
+                <span>
+                  {role === 'seller'
+                    ? 'Sign In as Seller'
+                    : 'Sign In to Dashboard'
+                  }
+                </span>
+
+                <span className="login-submit-arrow">
+                  →
+                </span>
+
               </button>
+
             </form>
 
-            <div className="auth-footer-redirect">
-              <p>New to EcoBazaar? <Link to="/signup">Create an account</Link></p>
+
+            {/* Footer */}
+
+            <div className="login-divider">
+              <span></span>
+              <p>OR</p>
+              <span></span>
             </div>
+
+
+            <div className="login-signup">
+
+              <span>
+                New to EcoBazaar?
+              </span>
+
+              <Link to="/signup">
+                Create an account
+                <span> →</span>
+              </Link>
+
+            </div>
+
+
+            <div className="login-security">
+
+              <span>🔐</span>
+
+              <p>
+                Your information is protected with
+                secure authentication.
+              </p>
+
+            </div>
+
           </div>
+
         </div>
 
       </div>
+
     </div>
   );
 };

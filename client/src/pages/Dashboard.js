@@ -8,6 +8,8 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const [selectedSizes, setSelectedSizes] = useState({});
+
   // --- 1. User Greeting State ---
   const [userName, setUserName] = useState('Arybhatt');
   const [showWelcome, setShowWelcome] = useState(true);
@@ -212,60 +214,121 @@ export const Dashboard = () => {
   });
 
   return (
-    <div className="dashboard-wrapper" style={{ backgroundColor: '#d9c3b2' }}>
+    <div className="dashboard-wrapper" style={{ backgroundColor: '#ecd7c6' }}>
 
-      {/* Navbar */}
       <header className="eco-header">
+
+        {/* LEFT */}
         <div className="nav-left">
-          <div className="logo-container">
-            <img src={logoImg} alt="EcoBazaar Logo" className="nav-logo-img" />
-          </div>
+
+          <Link to="/dashboard" className="logo-container">
+            <img
+              src={logoImg}
+              alt="EcoBazaar Logo"
+              className="nav-logo-img"
+            />
+          </Link>
+
           <ul className="nav-links">
-            <li><Link to="/dashboard">Men</Link></li>
-            <li><Link to="/dashboard">Women</Link></li>
-            <li><Link to="/dashboard">Kids</Link></li>
+
+            <li>
+              <Link to="/dashboard">Men</Link>
+            </li>
+
+            <li>
+              <Link to="/dashboard">Women</Link>
+            </li>
+
+            <li>
+              <Link to="/dashboard">Kids</Link>
+            </li>
+
             <li>
               <button
+                className="seller-portal-btn"
                 onClick={(e) => {
                   e.preventDefault();
-                  const user = JSON.parse(localStorage.getItem('user'));
+
+                  const user = JSON.parse(
+                    localStorage.getItem('user')
+                  );
 
                   if (!user || !user.id) {
-                    alert('Please login first to access the Seller Portal!');
+                    alert(
+                      'Please login first to access the Seller Portal!'
+                    );
                     navigate('/login');
                     return;
                   }
 
-                  const isSeller = localStorage.getItem('isSeller') === 'true' || user.role === 'seller';
+                  const isSeller =
+                    localStorage.getItem('isSeller') === 'true' ||
+                    user.role === 'seller';
 
                   if (isSeller) {
                     navigate('/seller');
                   } else {
-                    alert('Please register/login as a Seller first!');
-                    navigate('/Login'); // Ya jo bhi route tune seller registration ke liye banaya ho
+                    alert(
+                      'Please register/login as a Seller first!'
+                    );
+                    navigate('/login');
                   }
                 }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ff3f6c', fontWeight: 'bold', fontSize: '15px', padding: 0 }}
               >
+                <span>🏪</span>
                 Seller Portal
               </button>
             </li>
+
           </ul>
+
         </div>
 
+
+        {/* SEARCH */}
         <div className="nav-center">
+
           <div className="search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" className="search-input" placeholder="Search for products, brands and more" />
+
+            <span className="search-icon">
+              🔍
+            </span>
+
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for products, brands and more"
+            />
+
+            <button className="search-btn">
+              Search
+            </button>
+
           </div>
+
         </div>
 
+
+        {/* RIGHT */}
         <div className="nav-right">
-          <Link className="nav-action" to="/checkout">
-            <i className="fa-solid fa-bag-shopping"></i>
-            🤵🏼Profile
+
+          <Link
+            className="nav-profile"
+            to="/checkout"
+          >
+
+            <span className="profile-icon">
+              👤
+            </span>
+
+            <span className="profile-text">
+              Profile
+            </span>
+
           </Link>
+
         </div>
+
       </header>
       {/* Feature 1: Auto-Hiding Welcome Popup Banner */}
       {showWelcome && (
@@ -440,21 +503,98 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* Feature 3: Flash Deals / Countdown Timer Section */}
-        <div className="flash-deals-section">
-          <div className="flash-deals-header">
-            <div className="flash-title-wrapper">
-              <h2>⚡ Flash Deals</h2>
-              <p>Limited-time sustainable offers, grab them before they expire!</p>
-            </div>
-            <div className="countdown-timer">
-              <span className="time-box">{String(timeLeft.hours).padStart(2, '0')}</span> :
-              <span className="time-box">{String(timeLeft.minutes).padStart(2, '0')}</span> :
-              <span className="time-box">{String(timeLeft.seconds).padStart(2, '0')}</span>
-            </div>
-          </div>
-        </div>
+        {/* =====================================================
+    FEATURE 3: PREMIUM FLASH DEALS
+===================================================== */}
 
+        <div className="flash-deals-section">
+
+          <div className="flash-deals-content">
+
+            {/* LEFT SIDE */}
+            <div className="flash-deals-left">
+
+              <div className="flash-live-badge">
+                <span className="live-dot"></span>
+                LIVE DEAL
+              </div>
+
+              <div className="flash-title-row">
+                <span className="flash-bolt">⚡</span>
+
+                <div>
+                  <h2>Flash Deals</h2>
+
+                  <p>
+                    Limited-time sustainable offers.
+                    Grab your favourites before they disappear!
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+
+            {/* RIGHT SIDE */}
+            <div className="flash-deals-right">
+
+              <div className="ending-text">
+                <span>ENDS IN</span>
+                <strong>Hurry! Limited Time</strong>
+              </div>
+
+
+              <div className="countdown-timer">
+
+                <div className="countdown-unit">
+                  <span className="time-box">
+                    {String(timeLeft.hours).padStart(2, '0')}
+                  </span>
+                  <small>HOURS</small>
+                </div>
+
+                <span className="timer-colon">:</span>
+
+                <div className="countdown-unit">
+                  <span className="time-box">
+                    {String(timeLeft.minutes).padStart(2, '0')}
+                  </span>
+                  <small>MINUTES</small>
+                </div>
+
+                <span className="timer-colon">:</span>
+
+                <div className="countdown-unit">
+                  <span className="time-box">
+                    {String(timeLeft.seconds).padStart(2, '0')}
+                  </span>
+                  <small>SECONDS</small>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* BOTTOM DEAL INFO */}
+
+          <div className="flash-deals-bottom">
+
+            <span>🌱 Eco-friendly products</span>
+
+            <span>♻️ Sustainable choices</span>
+
+            <span>🔥 Limited stock</span>
+
+            <span className="flash-shop-text">
+              Shop Deals →
+            </span>
+
+          </div>
+
+        </div>
         <div className="bento-banner-container">
           {/* Left Big Main Hero Banner */}
           <div className="bento-main-hero" onClick={() => navigate('/category/ethnic')}>
@@ -488,36 +628,98 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        {/* --- Glassmorphism USP Floating Strip --- */}
-        <div className="glass-usp-bar">
-          <div className="usp-item">
-            <span className="usp-icon">🌱</span>
-            <span>100% Organic Cotton</span>
-          </div>
-          <div className="usp-item">
-            <span className="usp-icon">♻️</span>
-            <span>Zero Plastic Packaging</span>
-          </div>
-          <div className="usp-item">
-            <span className="usp-icon">🔄</span>
-            <span>7-Days Easy Return</span>
-          </div>
-        </div>
-        {/* Premium Search, Category Filter & Sorting Bar */}
-        <div className="filter-search-section">
-          <div className="filter-top-row">
-            <h2 className="section-title">Trending Clothing Styles</h2>
 
-            {/* Search Box */}
+        {/* =====================================================
+    ECOBAZAAR — PREMIUM USP + TRENDING SECTION
+===================================================== */}
+
+        <div className="glass-usp-bar">
+
+          <div className="usp-item">
+            <div className="usp-icon-box">
+              🌱
+            </div>
+
+            <div className="usp-content">
+              <strong>100% Organic Cotton</strong>
+              <span>Soft & planet friendly</span>
+            </div>
+          </div>
+
+
+          <div className="usp-divider"></div>
+
+
+          <div className="usp-item">
+            <div className="usp-icon-box">
+              ♻️
+            </div>
+
+            <div className="usp-content">
+              <strong>Zero Plastic Packaging</strong>
+              <span>Better for our planet</span>
+            </div>
+          </div>
+
+
+          <div className="usp-divider"></div>
+
+
+          <div className="usp-item">
+            <div className="usp-icon-box">
+              🔄
+            </div>
+
+            <div className="usp-content">
+              <strong>7-Days Easy Return</strong>
+              <span>Shop with confidence</span>
+            </div>
+          </div>
+
+        </div>
+
+
+        {/* =====================================================
+    PREMIUM SEARCH + FILTER
+===================================================== */}
+
+        <div className="filter-search-section">
+
+          {/* TOP SECTION */}
+
+          <div className="filter-top-row">
+
+            <div className="trending-heading">
+
+              <span className="trending-eyebrow">
+                ✦ ECOBAZAAR COLLECTION
+              </span>
+
+              <h2 className="section-title">
+                Trending Clothing Styles
+              </h2>
+
+              <p>
+                Discover sustainable styles curated just for you.
+              </p>
+
+            </div>
+
+
+            {/* SEARCH */}
+
             <div className="trending-search-box">
+
               <i className="fa-solid fa-magnifying-glass trending-search-icon"></i>
+
               <input
                 type="text"
                 className="trending-search-input"
-                placeholder="Search items by name, brand..."
+                placeholder="Search products, brands..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+
               {searchTerm && (
                 <button
                   className="trending-clear-btn"
@@ -527,183 +729,499 @@ export const Dashboard = () => {
                   <i className="fa-solid fa-xmark"></i>
                 </button>
               )}
+
             </div>
+
           </div>
 
-          {/* Category Pills & Sorting Dropdown Row */}
+
+          {/* DIVIDER */}
+
+          <div className="filter-main-divider"></div>
+
+
+          {/* BOTTOM */}
+
           <div className="filter-bottom-row">
-            {/* Category Filter Pills */}
-            <div className="category-filters">
-              {['All', 'Men Clothing', 'Women Clothing', 'Kids', 'Home', 'Beauty', 'Footwear'].map((cat) => (
-                <button
-                  key={cat}
-                  className={`filter-pill ${selectedCategory === cat ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
+
+
+            {/* CATEGORY */}
+
+            <div className="category-area">
+
+              <span className="category-label">
+                SHOP BY CATEGORY
+              </span>
+
+              <div className="category-filters">
+
+                {[
+                  'All',
+                  'Men Clothing',
+                  'Women Clothing',
+                  'Kids',
+                  'Home',
+                  'Beauty',
+                  'Footwear'
+                ].map((cat) => (
+
+                  <button
+                    key={cat}
+                    className={`filter-pill ${selectedCategory === cat ? 'active' : ''
+                      }`}
+                    onClick={() => setSelectedCategory(cat)}
+                  >
+                    {cat}
+                  </button>
+
+                ))}
+
+              </div>
+
             </div>
 
-            {/* Sorting Dropdown */}
+
+            {/* SORT */}
+
             <div className="sorting-container">
-              <label htmlFor="sortSelect">Sort By: </label>
-              <select
-                id="sortSelect"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="sort-dropdown"
-              >
-                <option value="default">Default</option>
-                <option value="lowToHigh">Price: Low to High</option>
-                <option value="highToLow">Price: High to Low</option>
-                <option value="rating">Customer Rating</option>
-              </select>
+
+              <span className="sort-label">
+                SORT BY
+              </span>
+
+              <div className="sort-select-wrapper">
+
+                <i className="fa-solid fa-sliders sort-icon"></i>
+
+                <select
+                  id="sortSelect"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="sort-dropdown"
+                >
+                  <option value="default">
+                    Recommended
+                  </option>
+
+                  <option value="lowToHigh">
+                    Price: Low to High
+                  </option>
+
+                  <option value="highToLow">
+                    Price: High to Low
+                  </option>
+
+                  <option value="rating">
+                    Customer Rating
+                  </option>
+
+                </select>
+
+              </div>
+
             </div>
+
           </div>
+
         </div>
-        {/* Product Grid */}
-        <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '20px', padding: '10px 0' }}>
+        {/* =========================================================
+    PREMIUM PRODUCT GRID
+========================================================= */}
+
+        <div className="product-grid">
+
           {filteredProducts.length > 0 ? (
+
             filteredProducts.map((product) => {
-              const hasOffer = product.offer_price && Number(product.offer_price) < Number(product.price);
+
+              const productId = product.id || product._id;
+
+              const hasOffer =
+                product.offer_price &&
+                Number(product.offer_price) < Number(product.price);
+
+              const currentPrice = hasOffer
+                ? Number(product.offer_price)
+                : Number(product.price);
+
+              const originalPrice = Number(product.price);
+
+              const discount =
+                hasOffer && originalPrice > 0
+                  ? Math.round(
+                    ((originalPrice - currentPrice) / originalPrice) * 100
+                  )
+                  : 0;
+
+              const productSizes = product.sizes
+                ? String(product.sizes)
+                  .split(',')
+                  .map((size) => size.trim())
+                  .filter(Boolean)
+                : [];
 
               return (
-                <div className="product-card" key={product.id || product._id} style={{ border: '1px solid #eee', borderRadius: '8px', padding: '14px', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                  <div style={{ position: 'relative' }}>
-                    <span style={{ position: 'absolute', top: '8px', left: '8px', background: '#fff', padding: '2px 6px', fontSize: '12px', fontWeight: 'bold', borderRadius: '4px', zIndex: 2, boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                      ★ {product.rating || '4.5'}
-                    </span>
+
+                <article
+                  className="eco-product-card"
+                  key={productId}
+                >
+
+                  {/* =================================================
+              IMAGE
+          ================================================= */}
+
+                  <div className="eco-product-image-wrap">
+
                     <img
-                      src={product.image?.startsWith('http') ? product.image : `http://localhost:5000/${product.image}`}
-                      alt={product.title}
-                      style={{ width: '100%', height: '260px', objectFit: 'cover', borderRadius: '6px' }}
+                      src={
+                        product.image?.startsWith('http')
+                          ? product.image
+                          : `http://localhost:5000/${product.image}`
+                      }
+                      alt={product.title || product.name || 'Product'}
+                      className="eco-product-image"
                     />
-                    <span className="product-badge badge-eco">🌳 100% Eco-Friendly</span>
-                  </div>
 
-                  <div style={{ marginTop: '10px' }}>
-                    <h4 style={{ fontSize: '14px', fontWeight: 'bold', color: '#282c3f', margin: '4px 0', textTransform: 'uppercase' }}>
-                      {product.brand}
-                    </h4>
+                    {/* Eco Badge */}
 
-                    <p style={{ fontSize: '13px', fontWeight: '600', color: '#333', margin: '0 0 4px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {product.title || product.name}
-                    </p>
-
-                    {product.sizes && (
-                      <div style={{ fontSize: '12px', color: '#333', marginBottom: '8px', background: '#f8f9fa', padding: '4px 8px', borderRadius: '4px', display: 'inline-block', border: '1px solid #e2e8f0' }}>
-                        Sizes: <strong style={{ color: '#ff3f6c' }}>{product.sizes}</strong>
-                      </div>
-                    )}
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
-                      {hasOffer ? (
-                        <>
-                          <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#111' }}>₹{product.offer_price}</span>
-                          <span style={{ fontSize: '13px', color: '#999', textDecoration: 'line-through' }}>₹{product.price}</span>
-                          <span style={{ fontSize: '11px', color: '#ff3f6c', fontWeight: 'bold' }}>SPECIAL PRICE</span>
-                        </>
-                      ) : (
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#111' }}>₹{product.price}</span>
-                      )}
+                    <div className="eco-product-badge">
+                      🌿 100% ECO
                     </div>
 
-                    <div style={{ display: 'flex', gap: '8px' }}>
 
-                      {/* --- 1. Add to Cart Button --- */}
+                    {/* Wishlist */}
+
+                    <button
+                      type="button"
+                      className={`eco-wishlist-btn ${wishlist.includes(productId)
+                        ? 'wishlist-active'
+                        : ''
+                        }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleWishlist(productId);
+                      }}
+                      title={
+                        wishlist.includes(productId)
+                          ? 'Remove from Wishlist'
+                          : 'Add to Wishlist'
+                      }
+                    >
+                      {wishlist.includes(productId) ? '♥' : '♡'}
+                    </button>
+
+
+                    {/* Rating */}
+
+                    <div className="eco-rating">
+                      <span>★</span>
+                      {product.rating || '4.5'}
+                    </div>
+
+                  </div>
+
+
+                  {/* =================================================
+              PRODUCT CONTENT
+          ================================================= */}
+
+                  <div className="eco-product-content">
+
+
+                    {/* Brand */}
+
+                    <div className="eco-product-brand">
+                      {product.brand || 'EcoBazaar'}
+                    </div>
+
+
+                    {/* Product Name */}
+
+                    <h3 className="eco-product-title">
+                      {product.title || product.name}
+                    </h3>
+
+
+                    {/* =================================================
+                SIZE SELECTOR
+            ================================================= */}
+
+                    {productSizes.length > 0 && (
+
+                      <div className="eco-size-section">
+
+                        <div className="eco-size-header">
+                          <span>SELECT SIZE</span>
+
+                          <span className="eco-size-guide">
+                            Size Guide
+                          </span>
+                        </div>
+
+
+                        <div className="eco-size-options">
+
+                          {productSizes.map((size) => (
+
+                            <button
+                              key={size}
+                              type="button"
+                              className={`eco-size-btn ${selectedSizes?.[productId] === size
+                                ? 'size-selected'
+                                : ''
+                                }`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+
+                                setSelectedSizes((prev) => ({
+                                  ...prev,
+                                  [productId]: size
+                                }));
+                              }}
+                            >
+                              {size}
+                            </button>
+
+                          ))}
+
+                        </div>
+
+                      </div>
+
+                    )}
+
+
+                    {/* =================================================
+                PRICE
+            ================================================= */}
+
+                    <div className="eco-price-row">
+
+                      <div className="eco-price-main">
+
+                        <span className="eco-current-price">
+                          ₹{currentPrice.toFixed(2)}
+                        </span>
+
+                        {hasOffer && (
+
+                          <span className="eco-old-price">
+                            ₹{originalPrice.toFixed(2)}
+                          </span>
+
+                        )}
+
+                      </div>
+
+
+                      {hasOffer && (
+
+                        <span className="eco-discount">
+                          {discount}% OFF
+                        </span>
+
+                      )}
+
+                    </div>
+
+
+                    {/* =================================================
+                ACTION BUTTONS
+            ================================================= */}
+
+                    <div className="eco-product-actions">
+
+
+                      {/* Add Cart */}
+
                       <button
+                        type="button"
+                        className="eco-add-cart-btn"
                         onClick={(e) => {
-                          e.stopPropagation();
-                          try {
-                            // Cart items ko localStorage mein save karne ka logic
-                            const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-                            // Check karo kya product pehle se cart me hai
-                            const productIndex = existingCart.findIndex(item => (item.id || item._id) === (product.id || product._id));
+                          e.stopPropagation();
+
+                          try {
+
+                            const existingCart =
+                              JSON.parse(
+                                localStorage.getItem('cartItems')
+                              ) || [];
+
+
+                            const productIndex =
+                              existingCart.findIndex(
+                                (item) =>
+                                  (item.id || item._id) === productId
+                              );
+
 
                             if (productIndex > -1) {
-                              existingCart[productIndex].quantity = (existingCart[productIndex].quantity || 1) + 1;
+
+                              existingCart[productIndex].quantity =
+                                (existingCart[productIndex].quantity || 1) + 1;
+
                             } else {
-                              existingCart.push({ ...product, quantity: 1 });
+
+                              existingCart.push({
+                                ...product,
+                                selectedSize:
+                                  selectedSizes?.[productId] || null,
+                                quantity: 1
+                              });
+
                             }
 
-                            localStorage.setItem('cartItems', JSON.stringify(existingCart));
-                            alert(`Added ${product.title} to cart successfully! 🛒`);
+
+                            localStorage.setItem(
+                              'cartItems',
+                              JSON.stringify(existingCart)
+                            );
+
+
+                            alert(
+                              `${product.title || product.name} added to cart! 🛒`
+                            );
+
                           } catch (err) {
-                            console.error("Cart error:", err);
+
+                            console.error(
+                              'Cart error:',
+                              err
+                            );
+
+                            alert(
+                              'Unable to add product to cart.'
+                            );
+
                           }
+
                         }}
-                        style={{ flex: 1, padding: '8px', background: '#fff', border: '1px solid #ff3f6c', color: '#ff3f6c', fontWeight: 'bold', fontSize: '12px', borderRadius: '4px', cursor: 'pointer' }}
                       >
+                        <span>🛒</span>
                         Add to Cart
                       </button>
 
-                      {/* --- 2. Buy Now Button --- */}
+
+                      {/* Buy Now */}
+
                       <button
+                        type="button"
+                        className="eco-buy-now-btn"
                         onClick={async (e) => {
+
                           e.stopPropagation();
+
                           try {
-                            const user = JSON.parse(localStorage.getItem('user'));
+
+                            const user =
+                              JSON.parse(
+                                localStorage.getItem('user')
+                              );
+
+
                             if (!user || !user.id) {
+
                               alert('Please login first!');
+
                               navigate('/login');
+
                               return;
+
                             }
 
-                            // 1. Jaise Add to Cart karta hai, waise hi cart items fetch/update karo
-                            const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-                            const productIndex = existingCart.findIndex(item => (item.id || item._id) === (product.id || product._id));
+
+                            const existingCart =
+                              JSON.parse(
+                                localStorage.getItem('cartItems')
+                              ) || [];
+
+
+                            const productIndex =
+                              existingCart.findIndex(
+                                (item) =>
+                                  (item.id || item._id) === productId
+                              );
+
 
                             if (productIndex > -1) {
-                              existingCart[productIndex].quantity = (existingCart[productIndex].quantity || 1) + 1;
+
+                              existingCart[productIndex].quantity =
+                                (existingCart[productIndex].quantity || 1) + 1;
+
                             } else {
-                              existingCart.push({ ...product, quantity: 1 });
+
+                              existingCart.push({
+                                ...product,
+                                selectedSize:
+                                  selectedSizes?.[productId] || null,
+                                quantity: 1
+                              });
+
                             }
 
-                            // 2. LocalStorage mein cart save kar do
-                            localStorage.setItem('cartItems', JSON.stringify(existingCart));
 
-                            // 3. Seedha profile/dashboard page par bhej do jahan apna CheckoutCart component chal raha hai
-                            navigate('/checkout'); // Agar tumhara profile route kuch aur hai (jaise '/dashboard' ya '/account'), toh wo yahan likh dena
+                            localStorage.setItem(
+                              'cartItems',
+                              JSON.stringify(existingCart)
+                            );
+
+
+                            navigate('/checkout');
+
                           } catch (err) {
-                            console.error("Buy Now error:", err);
-                            alert('Something went wrong!');
+
+                            console.error(
+                              'Buy Now error:',
+                              err
+                            );
+
+                            alert(
+                              'Something went wrong!'
+                            );
+
                           }
+
                         }}
-                        style={{ flex: 1, padding: '8px', background: '#ff3f6c', border: 'none', color: '#fff', fontWeight: 'bold', fontSize: '12px', borderRadius: '4px', cursor: 'pointer' }}
                       >
                         Buy Now
-                      </button>
-                      {/* Wishlist Button */}
-                      <button
-                        className={`wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}`}
-                        onClick={() => toggleWishlist(product.id)}
-                        title={wishlist.includes(product.id) ? "Remove from Wishlist" : "Add to Wishlist"}
-                      >
-                        {wishlist.includes(product.id) ? '❤️' : '🤍'}
+                        <span>→</span>
                       </button>
 
-                      <button
-                        className="quick-view-trigger-btn"
-                        onClick={() => {
-                          setQuickViewProduct(product);
-                          addToRecentlyViewed(product);
-                        }}
-                      >
-                        Quick View 👁️
-                      </button>
                     </div>
                   </div>
-                </div>
+
+                </article>
+
               );
+
             })
+
           ) : (
-            <div className="no-products-found">
-              <i className="fa-solid fa-box-open" style={{ fontSize: '32px', marginBottom: '10px', color: '#a0aec0' }}></i>
-              <p>No products found matching your search or category filter.</p>
+
+            /* =====================================================
+               NO PRODUCTS
+            ===================================================== */
+
+            <div className="eco-no-products">
+
+              <div className="eco-no-products-icon">
+                📦
+              </div>
+
+              <h3>
+                No products found
+              </h3>
+
+              <p>
+                Try another search or select a different category.
+              </p>
+
             </div>
+
           )}
+
         </div>
       </div>
       {/* Feature 5: Customer Reviews & Testimonials Section */}
