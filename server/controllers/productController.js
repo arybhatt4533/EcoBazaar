@@ -23,7 +23,6 @@ exports.getProducts = async (req, res) => {
 // Add Product
 exports.addProduct = async (req, res) => {
   try {
-    // Check if body exists
     if (!req.body) {
       return res.status(400).json({ success: false, error: "Request body is missing" });
     }
@@ -68,6 +67,78 @@ exports.addProduct = async (req, res) => {
 
   } catch (err) {
     console.error("Database Insert Error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+// Update / Edit Product
+exports.updateProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { 
+      brand = '', 
+      title = '', 
+      category = '', 
+      price = 0, 
+      offer_price = null, 
+      sizes = '', 
+      description = '', 
+      specifications = '' 
+    } = req.body;
+
+    // Check if product exists and get old image
+    const existing = await pool.query('SELECT image FROM products WHERE id = $1', [productId]);
+    if (existing.rows.length === 0) {
+      return res.status(404).json({ success: false, error: "Product not found" });
+    }
+
+    // Agar nayi image upload ki hai toh wo use karo, nahi toh purani wali rehne do
+    const imagePath = req.file ? `uploads/${req.file.filename}` : existing.rows[0].image;
+
+    const query = `
+      UPDATE products 
+      SET brand = $1, title = $2, category = $3, price = $4, offer_price = $5, 
+          sizes = $6, image = $7, description = $8, specifications = $9
+      WHERE id = $10 
+      RETURNING *
+    `;
+
+    const values = [
+      brand, 
+      title, 
+      category, 
+      price, 
+      offer_price || null, 
+      sizes, 
+      imagePath, 
+      description, 
+      specifications, 
+      productId
+    ];
+
+    const updatedProduct = await pool.query(query, values);
+    res.json({ success: true, product: updatedProduct.rows[0], message: "Product updated successfully!" });
+
+  } catch (err) {
+    console.error("Database Update Error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+// Delete Product
+exports.deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await pool.query('DELETE FROM products WHERE id = $1 RETURNING *', [productId]);
+
+    if (deletedProduct.rows.length === 0) {
+      return res.status(404).json({ success: false, error: "Product not found" });
+    }
+
+    res.json({ success: true, message: "Product deleted successfully!" });
+
+  } catch (err) {
+    console.error("Database Delete Error:", err);
     res.status(500).json({ success: false, error: err.message });
   }
 };

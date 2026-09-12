@@ -28,6 +28,10 @@ const SellerUpload = () => {
   // New State for storing uploaded products list
   const [sellerProducts, setSellerProducts] = useState([]);
 
+  // Edit Mode States
+  const [isEditing, setIsEditing] = useState(false);
+  const [editProductId, setEditProductId] = useState(null);
+
   // AI Growth Advisor State
   const [growthGoal, setGrowthGoal] = useState('sales');
   const [aiTip, setAiTip] = useState('Select a business goal above to get tailored AI-driven strategies for scaling your green enterprise.');
@@ -54,54 +58,29 @@ const SellerUpload = () => {
   const totalInventoryValue = sellerProducts.reduce((acc, item) => acc + Number(item.price || 0), 0);
   const totalOfferValue = sellerProducts.reduce((acc, item) => acc + Number(item.offer_price || item.price || 0), 0);
 
-  // Slides ka data (6-7 dynamic slides with professional Unsplash images)
+  // Slides ka data
   const slides = [
     {
       tag: "🚀 GROW YOUR BUSINESS",
       title: "Expand Your Reach & Reduce Waste",
       desc: "Digitalize your inventory, connect with conscious buyers instantly, and scale your green business growth seamlessly.",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)" // Emerald Green
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80"
     },
     {
       tag: "📈 BOOST SALES & VISIBILITY",
       title: "Reach Thousands of Eco-Friendly Buyers",
       desc: "Showcase your sustainable fashion and lifestyle products to a dedicated community that values green shopping.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)" // Royal Blue
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80"
     },
     {
       tag: "💡 SMART INVENTORY MANAGEMENT",
       title: "Manage Listings & Track Orders Easily",
       desc: "Use our advanced dashboard tools to upload products, monitor sales performance, and optimize daily operations.",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)" // Purple
-    },
-    {
-      tag: "🤝 SUSTAINABLE PARTNERSHIPS",
-      title: "Partner with Green Initiatives",
-      desc: "Turn surplus inventory and sustainable items into profitable revenue streams while cleaning the environment.",
-      image: "https://images.unsplash.com/photo-1542744094-3a3124356e3b?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #f59e0b 0%, #b45309 100%)" // Warm Amber
-    },
-    {
-      tag: "🌟 PREMIUM VENDOR NETWORK",
-      title: "Elevate Your Brand Presence",
-      desc: "Stand out in the marketplace with verified seller badges and priority listings for top eco-friendly items.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #ec4899 0%, #be185d 100%)" // Pink/Rose
-    },
-    {
-      tag: "📊 REAL-TIME ANALYTICS",
-      title: "Track Revenue & Growth Metrics",
-      desc: "Get deep insights into customer preferences, top-selling categories, and daily earnings right from your panel.",
-      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80",
-      gradient: "linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)" // Cyan
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80"
     }
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto Slide Change (Har 4 seconds mein)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -109,27 +88,22 @@ const SellerUpload = () => {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   // AI Growth Advisor Generator Logic
   const handleAIGrowthAdvice = (goal) => {
     setGrowthGoal(goal);
     if (goal === 'sales') {
-      setAiTip("🤖 AI Tip: Bundle your top-selling eco-friendly apparel with complimentary organic accessories to increase Average Order Value (AOV) by up to 22%. Highlight biodegradable packaging in your titles!");
+      setAiTip("🤖 AI Tip: Bundle your top-selling eco-friendly apparel with complimentary organic accessories to increase Average Order Value (AOV) by up to 22%.");
     } else if (goal === 'visibility') {
-      setAiTip("🤖 AI Tip: Leverage high-resolution imagery showing natural lighting. Use keywords like 'Handcrafted', 'Organic Cotton', and 'Zero-Waste' in your descriptions to rank higher in eco-search algorithms.");
+      setAiTip("🤖 AI Tip: Leverage high-resolution imagery showing natural lighting. Use keywords like 'Handcrafted' and 'Organic Cotton' in descriptions.");
     } else if (goal === 'retention') {
-      setAiTip("🤖 AI Tip: Include a handwritten 'Thank You' card made from seed paper with every shipment. Customers who plant their tags have a 40% higher repeat purchase rate!");
+      setAiTip("🤖 AI Tip: Include a handwritten 'Thank You' card made from seed paper with every shipment for higher customer retention!");
     }
   };
 
-  // Handle Logout with proper redirection
+  // Handle Logout
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem('user');
@@ -148,7 +122,41 @@ const SellerUpload = () => {
     setImageFile(e.target.files[0]);
   };
 
-  // Handle Form Submission
+  // --- DELETE PRODUCT FUNCTION ---
+  const handleDelete = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        const res = await axios.delete(`http://localhost:5000/api/products/${productId}`);
+        if (res.data.success) {
+          alert("Product deleted successfully!");
+          fetchProducts();
+        }
+      } catch (err) {
+        console.error("Delete failed", err);
+        alert("Failed to delete product.");
+      }
+    }
+  };
+
+  // --- START EDIT PRODUCT FUNCTION ---
+  const handleEditClick = (item) => {
+    setIsEditing(true);
+    setEditProductId(item.id || item._id);
+    setFormData({
+      brand: item.brand || '',
+      title: item.title || '',
+      category: item.category || 'Men Clothing',
+      price: item.price || '',
+      offerPrice: item.offer_price || '',
+      sizes: item.sizes || '',
+      description: item.description || '',
+      specifications: item.specifications || ''
+    });
+    // Scroll smoothly to upload form
+    document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // --- HANDLE FORM SUBMISSION (CREATE OR UPDATE) ---
   const handleUpload = async (e) => {
     e.preventDefault();
 
@@ -168,14 +176,21 @@ const SellerUpload = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/products', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      let res;
+      if (isEditing) {
+        // Update API call (PUT)
+        res = await axios.put(`http://localhost:5000/api/products/${editProductId}`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      } else {
+        // Create API call (POST)
+        res = await axios.post('http://localhost:5000/api/products', data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      }
 
-      if (res.data.success || res.status === 201 || res.status === 200) {
-        alert('Product uploaded successfully!');
+      if (res.data.success) {
+        alert(isEditing ? 'Product updated successfully!' : 'Product uploaded successfully!');
         setFormData({
           brand: '',
           title: '',
@@ -187,11 +202,13 @@ const SellerUpload = () => {
           specifications: ''
         });
         setImageFile(null);
+        setIsEditing(false);
+        setEditProductId(null);
         fetchProducts();
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to upload product.');
+      alert('Operation failed.');
     }
   };
 
@@ -205,14 +222,14 @@ const SellerUpload = () => {
         </div>
         <div className="nav-links">
           <a href="#dashboard">Dashboard</a>
-          <a href="#expense-tracker">Expense & Tracker</a>
+          <a href="#expense-tracker">Financial Tracker</a>
           <a href="#ai-growth">AI Growth Hub</a>
-          <a href="#upload-section">Add Item</a>
+          <a href="#upload-section">{isEditing ? 'Edit Item' : 'Add Item'}</a>
           <a href="#logout" onClick={handleLogout} className="logout-link">Logout</a>
         </div>
       </nav>
 
-      {/* 2. Multi-Slide Hero Section */}
+      {/* 2. Hero Slider */}
       <header className="seller-hero-slider">
         {slides.map((slide, index) => (
           <div
@@ -227,54 +244,32 @@ const SellerUpload = () => {
             </div>
           </div>
         ))}
-        {/* Navigation Arrows */}
         <button className="slider-btn prev-btn" onClick={prevSlide}>❮</button>
         <button className="slider-btn next-btn" onClick={nextSlide}>❯</button>
-
-        {/* Dots Indicator */}
-        <div className="slider-dots">
-          {slides.map((_, index) => (
-            <span
-              key={index}
-              className={`dot ${index === currentSlide ? 'active' : ''}`}
-              onClick={() => setCurrentSlide(index)}
-            ></span>
-          ))}
-        </div>
       </header>
 
-      {/* 🌟 Store Financial & Upload Tracker Section */}
+      {/* 3. Tracker Section */}
       <section className="expense-tracker-section" id="expense-tracker">
         <div className="tracker-header">
           <h2><i className="fa-solid fa-chart-pie"></i> Store Financial & Upload Tracker</h2>
-          <p>Real-time analytics of total items listed and total inventory asset value in your store.</p>
         </div>
-
         <div className="tracker-cards-grid">
           <div className="tracker-card">
-            <div className="tracker-icon-box">
-              <img src={uploadImg} alt="Upload Icon" />
-            </div>
+            <div className="tracker-icon-box"><img src={uploadImg} alt="Upload" /></div>
             <div className="tracker-info">
               <span>Total Uploaded Items</span>
               <h3>{totalItemsUploaded} Products</h3>
             </div>
           </div>
-
           <div className="tracker-card">
-            <div className="tracker-icon-box">
-              <img src={inventoryImg} alt="Inventory Icon" />
-            </div>
+            <div className="tracker-icon-box"><img src={inventoryImg} alt="Inventory" /></div>
             <div className="tracker-info">
               <span>Total Inventory Value (MRP)</span>
               <h3>₹{totalInventoryValue.toLocaleString()}</h3>
             </div>
           </div>
-
           <div className="tracker-card">
-            <div className="tracker-icon-box">
-              <img src={priceImg} alt="Price Icon" />
-            </div>
+            <div className="tracker-icon-box"><img src={priceImg} alt="Price" /></div>
             <div className="tracker-info">
               <span>Total Selling Price Value</span>
               <h3>₹{totalOfferValue.toLocaleString()}</h3>
@@ -283,98 +278,47 @@ const SellerUpload = () => {
         </div>
       </section>
 
-      {/* Modern Moving Ticker Tape */}
-      <div className="ticker-wrapper">
-        <div className="ticker-track">
-          <div className="ticker-item"><span>💡 Pro Tip</span> Eco-conscious packaging boosts customer retention by up to 35%!</div>
-          <div className="ticker-item"><span>🚀 Growth Boost</span> Flash sales on organic lines increase store visibility instantly.</div>
-          <div className="ticker-item"><span>♻️ Green Impact</span> Reduce textile & material waste by listing surplus inventory.</div>
-          <div className="ticker-item"><span>⭐ Seller Success</span> Fast fulfillment leads to top 5-star ratings on EcoBazaar.</div>
-          {/* Duplicate items for seamless infinite loop effect */}
-          <div className="ticker-item"><span>💡 Pro Tip</span> Eco-conscious packaging boosts customer retention by up to 35%!</div>
-          <div className="ticker-item"><span>🚀 Growth Boost</span> Flash sales on organic lines increase store visibility instantly.</div>
-          <div className="ticker-item"><span>♻️ Green Impact</span> Reduce textile & material waste by listing surplus inventory.</div>
-          <div className="ticker-item"><span>⭐ Seller Success</span> Fast fulfillment leads to top 5-star ratings on EcoBazaar.</div>
-        </div>
-      </div>
-
-      {/* AI Business Growth Advisor Section */}
+      {/* AI Advisor */}
       <section className="ai-growth-section" id="ai-growth">
         <div className="ai-growth-card">
           <div className="ai-header">
             <h2><i className="fa-solid fa-wand-magic-sparkles"></i> EcoBazaar AI Business Growth Advisor</h2>
-            <p>Select your primary business objective to receive personalized data-driven growth insights.</p>
           </div>
           <div className="ai-buttons">
-            <button
-              className={`ai-goal-btn ${growthGoal === 'sales' ? 'active' : ''}`}
-              onClick={() => handleAIGrowthAdvice('sales')}
-            >
-              📈 Increase Sales & AOV
-            </button>
-            <button
-              className={`ai-goal-btn ${growthGoal === 'visibility' ? 'active' : ''}`}
-              onClick={() => handleAIGrowthAdvice('visibility')}
-            >
-              🔍 Boost Store Visibility
-            </button>
-            <button
-              className={`ai-goal-btn ${growthGoal === 'retention' ? 'active' : ''}`}
-              onClick={() => handleAIGrowthAdvice('retention')}
-            >
-              ❤️ Improve Customer Loyalty
-            </button>
+            <button className={`ai-goal-btn ${growthGoal === 'sales' ? 'active' : ''}`} onClick={() => handleAIGrowthAdvice('sales')}>📈 Increase Sales & AOV</button>
+            <button className={`ai-goal-btn ${growthGoal === 'visibility' ? 'active' : ''}`} onClick={() => handleAIGrowthAdvice('visibility')}>🔍 Boost Store Visibility</button>
+            <button className={`ai-goal-btn ${growthGoal === 'retention' ? 'active' : ''}`} onClick={() => handleAIGrowthAdvice('retention')}>❤️ Improve Customer Loyalty</button>
           </div>
-          <div className="ai-response-box">
-            <p>{aiTip}</p>
-          </div>
+          <div className="ai-response-box"><p>{aiTip}</p></div>
         </div>
       </section>
 
-      {/* 3. Product Upload Form Section */}
+      {/* 4. Product Upload / Edit Form Section */}
       <div className="upload-container" id="upload-section">
         <div className="upload-card">
           <div className="upload-header">
             <div className="portal-badge">
               <i className="fa-solid fa-store"></i> Seller Dashboard
             </div>
-            <h2>List New Product</h2>
-            <p>Add fashion or lifestyle inventory to EcoBazaar store with complete details</p>
+            <h2>{isEditing ? 'Edit Product Details' : 'List New Product'}</h2>
+            <p>{isEditing ? 'Update your existing listing' : 'Add fashion or lifestyle inventory to EcoBazaar store'}</p>
           </div>
 
           <form onSubmit={handleUpload} className="upload-form">
-
-            {/* Row 1: Brand & Title */}
             <div className="form-row">
               <div className="input-group">
-                <label><i className="fa-solid fa-tag"></i> Brand Name</label>
-                <input
-                  type="text"
-                  name="brand"
-                  placeholder="e.g., XL Wear"
-                  value={formData.brand}
-                  onChange={handleChange}
-                  required
-                />
+                <label>Brand Name</label>
+                <input type="text" name="brand" placeholder="e.g., XL Wear" value={formData.brand} onChange={handleChange} required />
               </div>
-
               <div className="input-group">
-                <label><i className="fa-solid fa-shirt"></i> Product Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="e.g., Men Relaxed Casual Shirt"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                />
+                <label>Product Title</label>
+                <input type="text" name="title" placeholder="e.g., Casual Shirt" value={formData.title} onChange={handleChange} required />
               </div>
             </div>
 
-            {/* Row 2: Category & MRP */}
             <div className="form-row">
               <div className="input-group">
-                <label><i className="fa-solid fa-list"></i> Category</label>
+                <label>Category</label>
                 <select name="category" value={formData.category} onChange={handleChange} className="select-box">
                   <option value="Men Clothing">Men Clothing</option>
                   <option value="Women Clothing">Women Clothing</option>
@@ -384,116 +328,69 @@ const SellerUpload = () => {
                   <option value="Footwear">Footwear</option>
                 </select>
               </div>
-
               <div className="input-group">
-                <label><i className="fa-solid fa-indian-rupee-sign"></i> Maximum Retail Price (MRP ₹)</label>
-                <input
-                  type="number"
-                  name="price"
-                  placeholder="2499"
-                  value={formData.price}
-                  onChange={handleChange}
-                  required
-                />
+                <label>MRP (₹)</label>
+                <input type="number" name="price" placeholder="2499" value={formData.price} onChange={handleChange} required />
               </div>
             </div>
 
-            {/* Row 3: Offer Price & Sizes */}
             <div className="form-row">
               <div className="input-group">
-                <label><i className="fa-solid fa-percent"></i> Selling / Offer Price (₹) [Optional]</label>
-                <input
-                  type="number"
-                  name="offerPrice"
-                  placeholder="1155"
-                  value={formData.offerPrice}
-                  onChange={handleChange}
-                />
+                <label>Offer Price (₹)</label>
+                <input type="number" name="offerPrice" placeholder="1155" value={formData.offerPrice} onChange={handleChange} />
               </div>
-
               <div className="input-group">
-                <label><i className="fa-solid fa-ruler-combined"></i> Available Sizes (Comma separated)</label>
-                <input
-                  type="text"
-                  name="sizes"
-                  placeholder="e.g., 38, 40, 42 or S, M, L, XL"
-                  value={formData.sizes}
-                  onChange={handleChange}
-                  required
-                />
+                <label>Available Sizes</label>
+                <input type="text" name="sizes" placeholder="S, M, L, XL" value={formData.sizes} onChange={handleChange} required />
               </div>
             </div>
 
-            {/* Row 4: Image Upload Box */}
             <div className="input-group full-width">
-              <label><i className="fa-solid fa-image"></i> Upload Product Image</label>
+              <label>Product Image {isEditing && "(Optional: choose new to replace)"}</label>
               <div className="file-upload-box">
-                <input
-                  type="file"
-                  name="image"
-                  id="file-input"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  required
-                />
+                <input type="file" name="image" id="file-input" accept="image/*" onChange={handleFileChange} />
                 <label htmlFor="file-input" className="file-upload-label">
-                  <i className="fa-solid fa-cloud-arrow-up"></i>
-                  <span>{imageFile ? imageFile.name : "Choose high-resolution product image..."}</span>
+                  <span>{imageFile ? imageFile.name : "Choose product image..."}</span>
                 </label>
               </div>
             </div>
 
-            {/* Row 5: Description */}
             <div className="input-group full-width">
-              <label><i className="fa-solid fa-align-left"></i> Product Details / Description</label>
-              <textarea
-                name="description"
-                placeholder="e.g., Blue Solid Opaque Casual shirts, Spread Collar, Button Placket..."
-                value={formData.description}
-                onChange={handleChange}
-                rows="3"
-              />
+              <label>Description</label>
+              <textarea name="description" value={formData.description} onChange={handleChange} rows="3" />
             </div>
 
-            {/* Row 6: Specifications */}
             <div className="input-group full-width">
-              <label><i className="fa-solid fa-circle-info"></i> Specifications (Material & Care / Fit)</label>
-              <textarea
-                name="specifications"
-                placeholder="e.g., 100% Cotton Denim. Machine wash cold. Fit: Oversized."
-                value={formData.specifications}
-                onChange={handleChange}
-                rows="2"
-              />
+              <label>Specifications</label>
+              <textarea name="specifications" value={formData.specifications} onChange={handleChange} rows="2" />
             </div>
 
-            {/* Action Buttons */}
             <div className="form-actions">
               <button type="submit" className="upload-btn">
-                <i className="fa-solid fa-rocket"></i> Publish Product
+                {isEditing ? 'Update Product' : 'Publish Product'}
               </button>
-              <button type="button" className="back-btn" onClick={() => navigate('/')}>
-                <i className="fa-solid fa-arrow-left"></i> Back to Store
-              </button>
+              {isEditing && (
+                <button type="button" className="back-btn" onClick={() => { setIsEditing(false); setEditProductId(null); }}>
+                  Cancel Edit
+                </button>
+              )}
             </div>
-
           </form>
         </div>
       </div>
 
-      {/* 4. Uploaded Products List Section */}
+      {/* 5. Uploaded Products List with Edit/Delete */}
       <div className="my-products-container">
         <div className="section-title">
           <h3>Your Uploaded Products ({sellerProducts.length})</h3>
-          <p>Manage and track all the items you have listed on EcoBazaar</p>
         </div>
 
         <div className="products-grid">
           {sellerProducts.length === 0 ? (
-            <p className="no-products">No products uploaded yet. Start by filling the form above!</p>
+            <p className="no-products">No products uploaded yet.</p>
           ) : (
             sellerProducts.map((item) => (
-              <div key={item.id || item._id} className="uploaded-product-card">
+              <div key={item.id || item._id} className="uploaded-product-card" style={{ position: 'relative' }}>
                 <img src={item.image ? `http://localhost:5000/${item.image}` : "https://via.placeholder.com/150"} alt={item.title} />
                 <div className="product-info">
                   <span className="card-brand">{item.brand}</span>
@@ -502,69 +399,28 @@ const SellerUpload = () => {
                     <span className="offer-price">₹{item.offer_price || item.price}</span>
                     {item.offer_price && <span className="mrp">₹{item.price}</span>}
                   </div>
-                  <span className="category-tag">{item.category}</span>
+                  
+                  {/* Edit & Delete Action Buttons */}
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                    <button 
+                      onClick={() => handleEditClick(item)}
+                      style={{ flex: 1, padding: '6px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(item.id || item._id)}
+                      style={{ flex: 1, padding: '6px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
           )}
         </div>
       </div>
-      <footer className="ecobazaar-footer">
-        <div className="footer-container">
-
-          {/* Column 1: Brand Info */}
-          <div className="footer-col">
-            <div className="footer-brand">🌱 EcoBazaar Seller Hub</div>
-            <p className="footer-desc">
-              Empowering green merchants and conscious creators to build a sustainable, zero-waste future together. Manage inventory, scale sales, and make an impact.
-            </p>
-            <div className="social-icons">
-              <a href="#facebook"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#instagram"><i className="fa-brands fa-instagram"></i></a>
-              <a href="#twitter"><i className="fa-brands fa-twitter"></i></a>
-              <a href="#linkedin"><i className="fa-brands fa-linkedin-in"></i></a>
-            </div>
-          </div>
-
-          {/* Column 2: Quick Links */}
-          <div className="footer-col">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="#dashboard">Seller Dashboard</a></li>
-              <li><a href="#expense-tracker">Financial Tracker</a></li>
-              <li><a href="#ai-growth">AI Growth Hub</a></li>
-              <li><a href="#upload-section">Upload Product</a></li>
-            </ul>
-          </div>
-
-          {/* Column 3: Support & Resources */}
-          <div className="footer-col">
-            <h3>Resources</h3>
-            <ul>
-              <li><a href="#guidelines">Merchant Guidelines</a></li>
-              <li><a href="#shipping">Green Shipping Policy</a></li>
-              <li><a href="#returns">Returns & Payouts</a></li>
-              <li><a href="#help">Seller Support Desk</a></li>
-            </ul>
-          </div>
-
-          {/* Column 4: Newsletter / Contact */}
-          <div className="footer-col">
-            <h3>Stay Updated</h3>
-            <p className="newsletter-text">Get weekly eco-trends and growth strategies directly in your inbox.</p>
-            <div className="newsletter-box">
-              <input type="email" placeholder="Enter your email..." />
-              <button type="button">Join</button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Bottom Copyright Bar */}
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} EcoBazaar Retail Tech. All rights reserved. Built with sustainability in mind.</p>
-        </div>
-      </footer>
 
     </div>
   );

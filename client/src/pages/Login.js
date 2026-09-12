@@ -358,6 +358,33 @@ export const Login = () => {
             </div>
 
 
+            {/* ================= ADMIN LOGIN SHORTCUT BUTTON ================= */}
+            <div style={{ marginTop: '20px', textAlign: 'center', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+              <button
+                type="button"
+                onClick={() => navigate('/admin/login')}
+                style={{
+                  width: '100%',
+                  background: '#000000',
+                  color: '#ef1818',
+                  border: '1.8px solid #b99a10',
+                  padding: '10px 16px',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                🛡️ Switch to Admin Portal
+              </button>
+            </div>
+
+
             <div className="login-security">
 
               <span>🔐</span>

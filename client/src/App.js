@@ -5,6 +5,9 @@ import Signup from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import SellerUpload from './pages/SellerUpload';
 import { CheckoutCart } from './pages/CheckoutCart';
+import AdminLogin from './components/AdminLogin';
+import { AdminPanel } from './components/AdminPanel';
+
 
 // Security Check Component (Bina login ke page kholne se rokega)
 const ProtectedRoute = ({ children, allowedRole }) => {
@@ -33,28 +36,31 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminPanel />} />
+
         {/* Dashboard (Public ya jaisa tera flow hai) */}
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        
+
         {/* Protected Checkout Route (Koi bhi logged-in user khol sakta hai) */}
-        <Route 
-          path="/checkout" 
+        <Route
+          path="/checkout"
           element={
             <ProtectedRoute>
               <CheckoutCart />
             </ProtectedRoute>
-          } 
+          }
         />
 
         {/* Protected Seller Route (Sirf aur sirf 'seller' role wala hi khol payega) */}
-        <Route 
-          path="/seller" 
+        <Route
+          path="/seller"
           element={
             <ProtectedRoute allowedRole="seller">
               <SellerUpload />
             </ProtectedRoute>
-          } 
+          }
         />
       </Routes>
     </Router>

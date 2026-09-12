@@ -6,6 +6,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const cartRoutes = require('./routes/cartRoutes');       // <-- Add this
 const addressRoutes = require('./routes/addressRoutes'); // <-- Add this
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/cart', cartRoutes);             // <-- Register this
 app.use('/api/addresses', addressRoutes);     // <-- Register this
+app.use('/api/admin', adminRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
