@@ -999,3 +999,150 @@
     }
 
 }
+
+/* Shared readable type scale with Login. */
+.signup-page,
+.signup-page input,
+.signup-page button {
+    font-family: Inter, Poppins, 'Segoe UI', Arial, sans-serif;
+}
+
+.signup-page * {
+    box-sizing: border-box;
+}
+
+.signup-brand-panel {
+    min-width: 0;
+}
+
+.signup-logo-container {
+    width: 190px;
+    height: 155px;
+}
+
+.signup-brand-logo {
+    width: 165px;
+    height: 130px;
+}
+
+.signup-mini-label {
+    font-size: 12px;
+    letter-spacing: 1.4px;
+}
+
+.signup-brand-text h1 {
+    font-size: 52px;
+    letter-spacing: -1.8px;
+}
+
+.signup-badge {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: none;
+}
+
+.signup-brand-text p {
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.signup-benefit strong {
+    font-size: 14px;
+}
+
+.signup-benefit small {
+    font-size: 12px;
+}
+
+.signup-form-panel {
+    min-width: 0;
+}
+
+.signup-form-card {
+    max-width: 500px;
+    padding: 34px 34px 28px;
+}
+
+.signup-welcome {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+}
+
+.signup-header h2 {
+    font-size: 38px;
+    line-height: 1.08;
+}
+
+.signup-header p {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.signup-role-title,
+.signup-field label {
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+.signup-role-btn {
+    min-height: 68px;
+    padding: 12px 14px;
+}
+
+.signup-role-btn strong {
+    font-size: 14px;
+}
+
+.signup-role-btn small {
+    font-size: 12px;
+}
+
+.signup-label-row span {
+    font-size: 11px;
+}
+
+.signup-input {
+    height: 54px;
+    padding: 0 14px;
+}
+
+.signup-input input {
+    font-size: 15px;
+}
+
+.signup-submit {
+    height: 54px;
+    font-size: 15px;
+}
+
+.signup-footer {
+    margin-top: 22px;
+    font-size: 13px;
+}
+
+@media (min-width: 951px) {
+    .signup-card {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 950px) and (min-width: 601px) {
+    .signup-card {
+        grid-template-columns: 1fr;
+        max-width: 720px;
+    }
+}
+
+@media (max-width: 600px) {
+    .signup-brand-text h1 {
+        font-size: 42px;
+    }
+
+    .signup-header h2 {
+        font-size: 32px;
+    }
+
+    .signup-form-card {
+        padding: 28px 22px 24px;
+    }
+}

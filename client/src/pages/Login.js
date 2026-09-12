@@ -8,10 +8,16 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('buyer');
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleAuth = async (e) => {
     e.preventDefault();
+
+    if (loading) return;
+
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -36,33 +42,69 @@ export const Login = () => {
           navigate('/dashboard');
         }
       }
-
     } catch (err) {
       alert(
         err.response?.data?.error ||
         'Authentication failed. Please check your credentials.'
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
 
+      {/* =========================================
+          BACKGROUND DECORATION
+      ========================================= */}
+
+      <div className="login-bg-orb login-bg-orb-one"></div>
+      <div className="login-bg-orb login-bg-orb-two"></div>
+      <div className="login-bg-orb login-bg-orb-three"></div>
+
+      <div className="login-bg-pattern"></div>
+
+
+      {/* =========================================
+          MAIN LOGIN CARD
+      ========================================= */}
+
       <div className="login-card">
 
-        {/* ================= LEFT BRAND SECTION ================= */}
 
-        <div className="login-brand-section">
+        {/* =========================================
+            LEFT BRAND PANEL
+        ========================================= */}
+
+        <section className="login-brand-section">
+
+          <div className="brand-glow"></div>
 
           <div className="login-brand-content">
 
+            {/* Logo */}
+
             <div className="login-logo-wrapper">
-              <img
-                src={brandLogo}
-                alt="EcoBazaar Logo"
-                className="login-logo"
-              />
+
+              <div className="login-logo-ring"></div>
+
+              <div className="login-logo-ring login-logo-ring-two"></div>
+
+              <div className="login-logo-core">
+
+                <img
+                  src={brandLogo}
+                  alt="EcoBazaar Logo"
+                  className="login-logo"
+                />
+
+              </div>
+
             </div>
+
+
+            {/* Brand Heading */}
 
             <div className="login-brand-heading">
 
@@ -70,22 +112,27 @@ export const Login = () => {
                 🌿 WELCOME BACK TO
               </span>
 
-              <h1>EcoBazaar</h1>
+              <h1>
+                Eco<span>Bazaar</span>
+              </h1>
 
               <div className="login-badge">
-                <span>✦</span>
+                <span className="badge-dot"></span>
                 Sustainable Marketplace
               </div>
 
               <p>
-                Your sustainable shopping journey starts
-                here. Discover eco-friendly products and
-                connect with conscious communities.
+                Your sustainable shopping journey starts here.
+                Discover eco-friendly products and connect
+                with a community that cares about tomorrow.
               </p>
 
             </div>
 
-            {/* Feature cards */}
+
+            {/* =========================================
+                FEATURE CARDS
+            ========================================= */}
 
             <div className="login-features">
 
@@ -95,12 +142,17 @@ export const Login = () => {
                   🌱
                 </div>
 
-                <div>
+                <div className="login-feature-text">
                   <strong>Shop Sustainably</strong>
                   <span>Better choices for our planet</span>
                 </div>
 
+                <div className="feature-arrow">
+                  →
+                </div>
+
               </div>
+
 
               <div className="login-feature">
 
@@ -108,12 +160,17 @@ export const Login = () => {
                   ♻️
                 </div>
 
-                <div>
+                <div className="login-feature-text">
                   <strong>Make an Impact</strong>
                   <span>Every purchase makes a difference</span>
                 </div>
 
+                <div className="feature-arrow">
+                  →
+                </div>
+
               </div>
+
 
               <div className="login-feature">
 
@@ -121,9 +178,13 @@ export const Login = () => {
                   🤝
                 </div>
 
-                <div>
+                <div className="login-feature-text">
                   <strong>Green Community</strong>
                   <span>Connect with conscious people</span>
+                </div>
+
+                <div className="feature-arrow">
+                  →
                 </div>
 
               </div>
@@ -132,26 +193,60 @@ export const Login = () => {
 
           </div>
 
+
+          {/* Brand Bottom */}
+
           <div className="login-brand-bottom">
-            <span>🌍</span>
-            <span>Building a greener tomorrow, together.</span>
+
+            <div className="brand-bottom-icon">
+              🌍
+            </div>
+
+            <div>
+              <span>Building a greener tomorrow</span>
+              <small>Together, one choice at a time.</small>
+            </div>
+
           </div>
 
-        </div>
+        </section>
 
 
-        {/* ================= RIGHT LOGIN SECTION ================= */}
 
-        <div className="login-form-section">
+        {/* =========================================
+            RIGHT LOGIN PANEL
+        ========================================= */}
+
+        <section className="login-form-section">
 
           <div className="login-form-container">
 
-            {/* Header */}
+
+            {/* Top Status */}
+
+            <div className="login-top-status">
+
+              <span className="status-dot"></span>
+
+              <span>SECURE LOGIN</span>
+
+              <span className="status-line"></span>
+
+              <span className="status-text">
+                ECOBAZAAR
+              </span>
+
+            </div>
+
+
+            {/* =========================================
+                HEADER
+            ========================================= */}
 
             <div className="login-header">
 
               <span className="login-header-label">
-                ✦ SECURE ACCESS
+                ✦ MEMBER ACCESS
               </span>
 
               <h2>
@@ -167,15 +262,29 @@ export const Login = () => {
             </div>
 
 
-            {/* Role Selection */}
+            {/* =========================================
+                ROLE SELECTOR
+            ========================================= */}
 
             <div className="login-role-section">
 
-              <div className="login-role-label">
-                Continue as
+              <div className="login-role-label-row">
+
+                <span className="login-role-label">
+                  CONTINUE AS
+                </span>
+
+                <span className="role-hint">
+                  Choose your account type
+                </span>
+
               </div>
 
+
               <div className="login-role-switch">
+
+
+                {/* BUYER */}
 
                 <button
                   type="button"
@@ -196,14 +305,14 @@ export const Login = () => {
                     <small>Shop products</small>
                   </span>
 
-                  {role === 'buyer' && (
-                    <span className="login-check">
-                      ✓
-                    </span>
-                  )}
+                  <span className="login-role-radio">
+                    {role === 'buyer' && '✓'}
+                  </span>
 
                 </button>
 
+
+                {/* SELLER */}
 
                 <button
                   type="button"
@@ -224,11 +333,9 @@ export const Login = () => {
                     <small>Manage store</small>
                   </span>
 
-                  {role === 'seller' && (
-                    <span className="login-check">
-                      ✓
-                    </span>
-                  )}
+                  <span className="login-role-radio">
+                    {role === 'seller' && '✓'}
+                  </span>
 
                 </button>
 
@@ -237,53 +344,70 @@ export const Login = () => {
             </div>
 
 
-            {/* Login Form */}
+
+            {/* =========================================
+                LOGIN FORM
+            ========================================= */}
 
             <form
               onSubmit={handleAuth}
               className="login-form"
             >
 
-              {/* Email */}
+
+              {/* EMAIL */}
 
               <div className="login-field">
 
-                <label>Email Address</label>
+                <label htmlFor="login-email">
+                  Email Address
+                </label>
 
                 <div className="login-input-wrapper">
 
                   <span className="login-input-icon">
-                    ✉️
+                    @
                   </span>
 
                   <input
+                    id="login-email"
                     type="email"
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) =>
                       setEmail(e.target.value)
                     }
+                    autoComplete="username"
                     required
                   />
+
+                  <span className="input-check">
+                    ✓
+                  </span>
 
                 </div>
 
               </div>
 
 
-              {/* Password */}
+
+              {/* PASSWORD */}
 
               <div className="login-field">
 
                 <div className="login-label-row">
 
-                  <label>Password</label>
+                  <label htmlFor="login-password">
+                    Password
+                  </label>
 
                   <button
                     type="button"
                     className="login-forgot"
                     onClick={() =>
-                      alert('Password recovery coming soon.')
+                      alert(
+                        'Password recovery coming soon.'
+                      )
                     }
                   >
                     Forgot password?
@@ -291,19 +415,22 @@ export const Login = () => {
 
                 </div>
 
+
                 <div className="login-input-wrapper">
 
                   <span className="login-input-icon">
-                    🔒
+                    ◆
                   </span>
 
                   <input
+                    id="login-password"
                     type="password"
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) =>
                       setPassword(e.target.value)
                     }
+                    autoComplete="current-password"
                     required
                   />
 
@@ -312,22 +439,32 @@ export const Login = () => {
               </div>
 
 
-              {/* Submit */}
+
+              {/* =========================================
+                  SUBMIT BUTTON
+              ========================================= */}
 
               <button
                 type="submit"
-                className="login-submit"
+                className={`login-submit ${
+                  loading ? 'login-submit-loading' : ''
+                }`}
+                disabled={loading}
               >
 
-                <span>
-                  {role === 'seller'
+                <span className="login-submit-text">
+
+                  {loading
+                    ? 'Authenticating...'
+                    : role === 'seller'
                     ? 'Sign In as Seller'
                     : 'Sign In to Dashboard'
                   }
+
                 </span>
 
                 <span className="login-submit-arrow">
-                  →
+                  {loading ? '◌' : '→'}
                 </span>
 
               </button>
@@ -335,14 +472,26 @@ export const Login = () => {
             </form>
 
 
-            {/* Footer */}
+
+            {/* =========================================
+                DIVIDER
+            ========================================= */}
 
             <div className="login-divider">
+
               <span></span>
+
               <p>OR</p>
+
               <span></span>
+
             </div>
 
+
+
+            {/* =========================================
+                SIGNUP
+            ========================================= */}
 
             <div className="login-signup">
 
@@ -352,53 +501,105 @@ export const Login = () => {
 
               <Link to="/signup">
                 Create an account
-                <span> →</span>
+                <span className="signup-arrow">
+                  →
+                </span>
               </Link>
 
             </div>
 
 
-            {/* ================= ADMIN LOGIN SHORTCUT BUTTON ================= */}
-            <div style={{ marginTop: '20px', textAlign: 'center', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+
+            {/* =========================================
+                ADMIN PORTAL
+            ========================================= */}
+
+            <div className="login-admin-section">
+
+              <div className="admin-shortcut-line"></div>
+
               <button
                 type="button"
                 onClick={() => navigate('/admin/login')}
-                style={{
-                  width: '100%',
-                  background: '#000000',
-                  color: '#ef1818',
-                  border: '1.8px solid #b99a10',
-                  padding: '10px 16px',
-                  borderRadius: '8px',
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  transition: 'all 0.2s ease'
-                }}
+                className="login-admin-btn"
               >
-                🛡️ Switch to Admin Portal
+
+                <span className="admin-btn-icon">
+                  🛡️
+                </span>
+
+                <span className="admin-btn-content">
+                  <strong>Admin Portal</strong>
+                  <small>Restricted access</small>
+                </span>
+
+                <span className="admin-btn-arrow">
+                  →
+                </span>
+
               </button>
+
             </div>
 
 
+
+            {/* =========================================
+                SECURITY FOOTER
+            ========================================= */}
+
             <div className="login-security">
 
-              <span>🔐</span>
+              <div className="security-icon">
+                🔐
+              </div>
 
-              <p>
-                Your information is protected with
-                secure authentication.
-              </p>
+              <div className="security-text">
+
+                <strong>
+                  Secure Authentication
+                </strong>
+
+                <p>
+                  Your account information is protected
+                  with secure authentication.
+                </p>
+
+              </div>
+
+              <span className="security-check">
+                ✓
+              </span>
 
             </div>
 
           </div>
 
-        </div>
+        </section>
+
+      </div>
+
+
+      {/* =========================================
+          PAGE FOOTER
+      ========================================= */}
+
+      <div className="login-page-footer">
+
+        <span>
+          © EcoBazaar
+        </span>
+
+        <i></i>
+
+        <span>
+          Sustainable Shopping
+        </span>
+
+        <i></i>
+
+        <span>
+          Better Future
+        </span>
 
       </div>
 

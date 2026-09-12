@@ -1707,3 +1707,186 @@ body {
   }
 
 }
+
+/* Readable dashboard type scale aligned with the public auth pages. */
+.admin-dashboard,
+.admin-dashboard button,
+.admin-dashboard input {
+  font-family: Inter, Poppins, 'Segoe UI', Arial, sans-serif;
+}
+
+.admin-dashboard .dashboard-header {
+  min-height: 82px;
+  padding-right: 42px;
+  padding-left: 42px;
+}
+
+.admin-dashboard .dashboard-brand img {
+  width: 116px;
+  height: 50px;
+}
+
+.admin-dashboard .dashboard-brand h1 {
+  font-size: 17px;
+}
+
+.admin-dashboard .dashboard-brand p,
+.admin-dashboard .system-online {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.admin-dashboard .refresh-btn,
+.admin-dashboard .dashboard-back-btn,
+.admin-dashboard .dashboard-logout-btn {
+  height: 40px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.admin-dashboard .dashboard-main {
+  padding-top: 52px;
+}
+
+.admin-dashboard .intro-kicker,
+.admin-dashboard .panel-kicker {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+}
+
+.admin-dashboard .dashboard-intro h2 {
+  font-size: 36px;
+}
+
+.admin-dashboard .dashboard-intro p {
+  font-size: 15px;
+}
+
+.admin-dashboard .node-status small {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+
+.admin-dashboard .node-status strong {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.admin-dashboard .stat-info span {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+
+.admin-dashboard .stat-info strong {
+  font-size: 32px;
+}
+
+.admin-dashboard .stat-info small {
+  font-size: 12px;
+}
+
+.admin-dashboard .management-header h2 {
+  font-size: 23px;
+}
+
+.admin-dashboard .management-tabs button {
+  font-size: 13px;
+}
+
+.admin-dashboard .management-tabs button span {
+  font-size: 11px;
+}
+
+.admin-dashboard .table-toolbar h3 {
+  font-size: 16px;
+}
+
+.admin-dashboard .table-toolbar p {
+  font-size: 12px;
+}
+
+.admin-dashboard .table-search {
+  height: 43px;
+}
+
+.admin-dashboard .table-search input {
+  font-size: 14px;
+}
+
+.admin-dashboard .admin-data-table th {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+
+.admin-dashboard .admin-data-table td {
+  font-size: 14px;
+}
+
+.admin-dashboard .product-cell strong,
+.admin-dashboard .user-cell strong {
+  font-size: 14px;
+}
+
+.admin-dashboard .product-cell span,
+.admin-dashboard .user-cell span,
+.admin-dashboard .email-text {
+  font-size: 12px;
+}
+
+.admin-dashboard .category-badge,
+.admin-dashboard .role-badge {
+  font-size: 12px;
+}
+
+.admin-dashboard .price-cell strong {
+  font-size: 15px;
+}
+
+.admin-dashboard .price-cell span,
+.admin-dashboard .status-badge,
+.admin-dashboard .delete-btn,
+.admin-dashboard .protected-text {
+  font-size: 12px;
+}
+
+.admin-dashboard .delete-btn {
+  height: 35px;
+}
+
+.admin-dashboard .dashboard-footer {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+}
+
+.admin-dashboard .admin-loading-screen h2 {
+  font-size: 20px;
+}
+
+.admin-dashboard .admin-loading-screen p {
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .admin-dashboard .dashboard-header {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .admin-dashboard .dashboard-brand h1 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-dashboard .dashboard-intro h2 {
+    font-size: 28px;
+  }
+
+  .admin-dashboard .dashboard-intro p {
+    font-size: 14px;
+  }
+
+  .admin-dashboard .stat-info strong {
+    font-size: 30px;
+  }
+}

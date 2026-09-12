@@ -326,12 +326,10 @@ body {
   0%,
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 
   50% {
     opacity: 0.45;
-    transform: scale(0.85);
   }
 }
 
@@ -847,16 +845,12 @@ body {
 
   from {
     opacity: 0;
-    transform:
-      translateX(30px)
-      scale(0.985);
+    transform: translateX(30px);
   }
 
   to {
     opacity: 1;
-    transform:
-      translateX(0)
-      scale(1);
+    transform: translateX(0);
   }
 }
 
@@ -2823,4 +2817,107 @@ h1 span {
       1fr !important;
   }
 
+}
+
+/* Final scoped proportions for the current AdminLogin DOM. */
+.admin-page .admin-main {
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 500px);
+}
+
+.admin-page .admin-login-section {
+  min-width: 0;
+  padding: 45px 32px;
+}
+
+.admin-page .admin-login-section .login-card {
+  width: 100% !important;
+  max-width: 500px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 42px 42px 30px !important;
+}
+
+.admin-page .login-heading h1 {
+  font-size: 46px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -1.5px !important;
+}
+
+.admin-page .login-heading p {
+  margin-bottom: 30px !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.admin-page .restricted-badge {
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+}
+
+.admin-page .login-field label {
+  font-size: 12px !important;
+  letter-spacing: 0.8px !important;
+}
+
+.admin-page .login-field label span {
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
+}
+
+.admin-page .field-box {
+  height: 56px !important;
+}
+
+.admin-page .field-box input {
+  font-size: 15px !important;
+}
+
+.admin-page .admin-login-button {
+  height: 57px !important;
+  font-size: 14px !important;
+  letter-spacing: 0.8px !important;
+}
+
+.admin-page .login-security strong {
+  font-size: 11px !important;
+  letter-spacing: 0.5px !important;
+}
+
+.admin-page .login-security span {
+  font-size: 10px !important;
+}
+
+.admin-page .return-store {
+  font-size: 13px !important;
+}
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .admin-page .admin-main {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 460px);
+  }
+
+  .admin-page .admin-login-section {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-page .admin-main {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page .admin-login-section {
+    padding: 30px 24px 45px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-page .admin-login-section .login-card {
+    padding: 30px 24px 26px !important;
+  }
+
+  .admin-page .login-heading h1 {
+    font-size: 38px !important;
+  }
 }
