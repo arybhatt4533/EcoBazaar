@@ -13,6 +13,7 @@ export const Dashboard = () => {
   // --- 1. User Greeting State ---
   const [userName, setUserName] = useState('Arybhatt');
   const [showWelcome, setShowWelcome] = useState(true);
+  const [sellerNotice, setSellerNotice] = useState('');
 
   useEffect(() => {
     // 3 seconds (3000 ms) ke baad popup hide ho jayega
@@ -58,6 +59,7 @@ export const Dashboard = () => {
 
   // --- 7. Quick View Modal State ---
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   // Fashion slides data
   const slidesData = [
@@ -213,6 +215,127 @@ export const Dashboard = () => {
     return 0; // default
   });
 
+  const wishlistedProducts = products
+    .filter(product => wishlist.includes(product.id || product._id))
+    .slice(0, 4);
+
+  const addProductToCart = (product) => {
+    try {
+      const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const productId = product.id || product._id;
+      const productIndex = existingCart.findIndex(
+        item => (item.id || item._id) === productId
+      );
+
+      if (productIndex > -1) {
+        existingCart[productIndex].quantity =
+          (existingCart[productIndex].quantity || 1) + 1;
+      } else {
+        existingCart.push({ ...product, quantity: 1 });
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(existingCart));
+      alert(`${product.title || product.name} added to cart! 🛒`);
+    } catch (err) {
+      console.error('Cart error:', err);
+      alert('Unable to add product to cart.');
+    }
+  };
+
+  const handleNavCategory = (category) => {
+    setSelectedCategory(category);
+    setSearchTerm('');
+    document.querySelector('.filter-search-section')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
+  const handleSellerPortalClick = () => {
+    let user = null;
+
+    try {
+      user = JSON.parse(localStorage.getItem('user'));
+    } catch (err) {
+      user = null;
+    }
+
+    const isSeller =
+      localStorage.getItem('isSeller') === 'true' ||
+      user?.role === 'seller';
+
+    if (user?.id && isSeller) {
+      navigate('/seller');
+      return;
+    }
+
+    const message = user?.id
+      ? 'Seller access needs a seller account. Please log in with a seller account.'
+      : 'Please log in first to access the Seller Portal.';
+
+    setSellerNotice(message);
+    window.setTimeout(() => navigate('/login'), 1400);
+  };
+
+  const promoCards = [
+    {
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300',
+      imageAlt: 'Casual Sneakers',
+      title: 'Casual-Day Picks',
+      offer: 'MIN. 50% OFF',
+      brands: ['KAKA RABBIT', 'U.S. POLO']
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300',
+      imageAlt: 'Precision Watches',
+      title: 'Precision Crafted',
+      offer: '20-50% OFF',
+      brands: ['CASIO', 'TITAN']
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300',
+      imageAlt: 'Herbal Bliss skincare',
+      title: 'Herbal Bliss',
+      offer: 'MIN. 25% OFF',
+      brands: ['KAMA', 'BIOTIQUE']
+    },
+    {
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_J30XhvqiKRgmVYef9BPBhtqoozZXhlLTT11syiWSKQ&s',
+      imageAlt: 'Active sportswear',
+      title: 'Active Wear',
+      offer: 'MIN. 45% OFF',
+      brands: ['adidas', 'PUMA']
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=300',
+      imageAlt: 'Durable cookware',
+      title: 'Durable Cookware',
+      offer: 'Under ₹1599',
+      brands: ['Pigeon', 'Prestige']
+    },
+    {
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-QGNtUbQpftsXNW5tvyojEPd6G35EHSaQ4AXa4IrX6g&s=10',
+      imageAlt: 'Luxury Fashion',
+      title: 'Luxury Fashion',
+      offer: 'MIN. 30% OFF',
+      brands: ['ZARA', 'H&M']
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=300',
+      imageAlt: 'Eco friendly workspace',
+      title: 'Eco Workspace',
+      offer: 'MIN. 35% OFF',
+      brands: ['IKEA', 'MUJI']
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1501554728187-ce583db33af7?w=300',
+      imageAlt: 'Outdoor travel essentials',
+      title: 'Travel Essentials',
+      offer: 'MIN. 40% OFF',
+      brands: ['WILDCRAFT', 'NIKE']
+    }
+  ];
+
   return (
     <div className="dashboard-wrapper" style={{ backgroundColor: '#ecd7c6' }}>
 
@@ -232,48 +355,21 @@ export const Dashboard = () => {
           <ul className="nav-links">
 
             <li>
-              <Link to="/dashboard">Men</Link>
+              <Link to="/dashboard" onClick={() => handleNavCategory('Men Clothing')}>Men</Link>
             </li>
 
             <li>
-              <Link to="/dashboard">Women</Link>
+              <Link to="/dashboard" onClick={() => handleNavCategory('Women Clothing')}>Women</Link>
             </li>
 
             <li>
-              <Link to="/dashboard">Kids</Link>
+              <Link to="/dashboard" onClick={() => handleNavCategory('Kids')}>Kids</Link>
             </li>
 
             <li>
               <button
                 className="seller-portal-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  const user = JSON.parse(
-                    localStorage.getItem('user')
-                  );
-
-                  if (!user || !user.id) {
-                    alert(
-                      'Please login first to access the Seller Portal!'
-                    );
-                    navigate('/login');
-                    return;
-                  }
-
-                  const isSeller =
-                    localStorage.getItem('isSeller') === 'true' ||
-                    user.role === 'seller';
-
-                  if (isSeller) {
-                    navigate('/seller');
-                  } else {
-                    alert(
-                      'Please register/login as a Seller first!'
-                    );
-                    navigate('/login');
-                  }
-                }}
+                onClick={handleSellerPortalClick}
               >
                 <span>🏪</span>
                 Seller Portal
@@ -298,9 +394,29 @@ export const Dashboard = () => {
               type="text"
               className="search-input"
               placeholder="Search for products, brands and more"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  document.querySelector('.filter-search-section')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }
+              }}
+              aria-label="Search products, brands and more"
             />
 
-            <button className="search-btn">
+            <button
+              type="button"
+              className="search-btn"
+              onClick={() => {
+                document.querySelector('.filter-search-section')?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
+            >
               Search
             </button>
 
@@ -330,6 +446,12 @@ export const Dashboard = () => {
         </div>
 
       </header>
+      {sellerNotice && (
+        <div className="dashboard-toast" role="status">
+          <span className="dashboard-toast-icon">i</span>
+          <span>{sellerNotice}</span>
+        </div>
+      )}
       {/* Feature 1: Auto-Hiding Welcome Popup Banner */}
       {showWelcome && (
         <div className="welcome-popup-banner">
@@ -404,103 +526,31 @@ export const Dashboard = () => {
             <span>🤩</span> WOW DEALS <span style={{ fontSize: '13px', fontWeight: '400', color: '#64748b' }}>| Big Brands, Even Bigger Savings</span>
           </div>
 
-          <div className="promo-slider-track">
-
-            {/* Card 1: Footwear */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Casual Sneakers" />
-                <div className="promo-overlay-content">
-                  <h3>Casual-Day Picks</h3>
-                  <p>MIN. 50% OFF</p>
-                </div>
+          <div className="promo-slider-viewport">
+            {[0, 1].map((copy) => (
+              <div
+                className="promo-slider-track"
+                key={copy}
+                aria-hidden={copy === 1}
+              >
+                {promoCards.map((card) => (
+                  <div className="promo-banner-card" key={`${copy}-${card.title}`}>
+                    <div className="promo-card-top">
+                      <img src={card.image} alt={card.imageAlt} />
+                      <div className="promo-overlay-content">
+                        <h3>{card.title}</h3>
+                        <p>{card.offer}</p>
+                      </div>
+                    </div>
+                    <div className="promo-brand-footer">
+                      <span>{card.brands[0]}</span>
+                      <span className="brand-divider">&</span>
+                      <span>{card.brands[1]}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="promo-brand-footer">
-                <span>KAKA RABBIT</span>
-                <span className="brand-divider">&</span>
-                <span>U.S. POLO</span>
-              </div>
-            </div>
-
-            {/* Card 2: Watches */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" alt="Precision Watches" />
-                <div className="promo-overlay-content">
-                  <h3>Precision Crafted</h3>
-                  <p>20-50% OFF</p>
-                </div>
-              </div>
-              <div className="promo-brand-footer">
-                <span>CASIO</span>
-                <span className="brand-divider">&</span>
-                <span>TITAN</span>
-              </div>
-            </div>
-
-            {/* Card 3: Skincare / Beauty */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300" alt="Herbal Bliss" />
-                <div className="promo-overlay-content">
-                  <h3>Herbal Bliss</h3>
-                  <p>MIN. 25% OFF</p>
-                </div>
-              </div>
-              <div className="promo-brand-footer">
-                <span>KAMA</span>
-                <span className="brand-divider">&</span>
-                <span>BIOTIQUE</span>
-              </div>
-            </div>
-
-            {/* Card 4: Sportswear */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_J30XhvqiKRgmVYef9BPBhtqoozZXhlLTT11syiWSKQ&s" alt="Sportswear" />
-                <div className="promo-overlay-content">
-                  <h3>Active Wear</h3>
-                  <p>MIN. 45% OFF</p>
-                </div>
-              </div>
-              <div className="promo-brand-footer">
-                <span>adidas</span>
-                <span className="brand-divider">&</span>
-                <span>PUMA</span>
-              </div>
-            </div>
-
-            {/* Card 5: Home & Kitchen */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=300" alt="Cookware" />
-                <div className="promo-overlay-content">
-                  <h3>Durable Cookware</h3>
-                  <p>Under ₹1599</p>
-                </div>
-              </div>
-              <div className="promo-brand-footer">
-                <span>Pigeon</span>
-                <span className="brand-divider">&</span>
-                <span>Prestige</span>
-              </div>
-            </div>
-
-            {/* Card 6: Luxury Fashion */}
-            <div className="promo-banner-card">
-              <div className="promo-card-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-QGNtUbQpftsXNW5tvyojEPd6G35EHSaQ4AXa4IrX6g&s=10" alt="Luxury Fashion" />
-                <div className="promo-overlay-content">
-                  <h3>Luxury Fashion</h3>
-                  <p>MIN. 30% OFF</p>
-                </div>
-              </div>
-              <div className="promo-brand-footer">
-                <span>ZARA</span>
-                <span className="brand-divider">&</span>
-                <span>H&M</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         {/* =====================================================
@@ -824,6 +874,57 @@ export const Dashboard = () => {
           </div>
 
         </div>
+
+        {wishlistedProducts.length > 0 && (
+          <section className="wishlist-preview-section" aria-labelledby="wishlist-preview-title">
+            <div className="wishlist-preview-heading">
+              <div>
+                <span className="wishlist-preview-eyebrow">YOUR SAVED PICKS</span>
+                <h2 id="wishlist-preview-title">Wishlist Preview</h2>
+              </div>
+              <span className="wishlist-preview-count">{wishlist.length} saved</span>
+            </div>
+
+            <div className="wishlist-preview-grid">
+              {wishlistedProducts.map((product) => {
+                const productId = product.id || product._id;
+                const currentPrice = product.offer_price || product.price;
+
+                return (
+                  <article className="wishlist-preview-card" key={productId}>
+                    <img
+                      src={product.image}
+                      alt={product.title || product.name || 'Saved product'}
+                    />
+                    <div className="wishlist-preview-details">
+                      <span>{product.brand || 'EcoBazaar'}</span>
+                      <h3>{product.title || product.name}</h3>
+                      <strong>₹{Number(currentPrice).toFixed(2)}</strong>
+                      <div className="wishlist-preview-actions">
+                        <button
+                          type="button"
+                          className="wishlist-cart-btn"
+                          onClick={() => addProductToCart(product)}
+                        >
+                          🛒 Add
+                        </button>
+                        <button
+                          type="button"
+                          className="wishlist-remove-btn"
+                          onClick={() => toggleWishlist(productId)}
+                          title="Remove from wishlist"
+                        >
+                          ♥
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
         {/* =========================================================
     PREMIUM PRODUCT GRID
 ========================================================= */}
@@ -954,9 +1055,15 @@ export const Dashboard = () => {
                         <div className="eco-size-header">
                           <span>SELECT SIZE</span>
 
-                          <span className="eco-size-guide">
-                            Size Guide
-                          </span>
+                          <button
+                            type="button"
+                            className="eco-size-guide"
+                            onClick={() => setShowSizeGuide(true)}
+                            title="Open size guide"
+                            aria-label="Open size guide"
+                          >
+                            📏
+                          </button>
                         </div>
 
 
@@ -1279,6 +1386,43 @@ export const Dashboard = () => {
             </div>
           </div>
         )}
+        {showSizeGuide && (
+          <div className="size-guide-overlay" onClick={() => setShowSizeGuide(false)}>
+            <div className="size-guide-modal" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={() => setShowSizeGuide(false)}
+                aria-label="Close size guide"
+              >
+                &times;
+              </button>
+              <span className="size-guide-eyebrow">FIND YOUR FIT</span>
+              <h2>Size Guide</h2>
+              <p>Use these body measurements to choose the best fit.</p>
+              <div className="size-guide-table-wrap">
+                <table className="size-guide-table">
+                  <thead>
+                    <tr>
+                      <th>Size</th>
+                      <th>Chest</th>
+                      <th>Waist</th>
+                      <th>Hip</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>XS</td><td>32 in</td><td>26 in</td><td>34 in</td></tr>
+                    <tr><td>S</td><td>34 in</td><td>28 in</td><td>36 in</td></tr>
+                    <tr><td>M</td><td>36 in</td><td>30 in</td><td>38 in</td></tr>
+                    <tr><td>L</td><td>38 in</td><td>32 in</td><td>40 in</td></tr>
+                    <tr><td>XL</td><td>40 in</td><td>34 in</td><td>42 in</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <small>Measurements are approximate. Check the product description for fit details.</small>
+            </div>
+          </div>
+        )}
       </div>
 
       <footer className="eco-footer">
@@ -1293,25 +1437,7 @@ export const Dashboard = () => {
               <li><Link to="/dashboard">Kid's Wear</Link></li>
               <li>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const user = JSON.parse(localStorage.getItem('user'));
-
-                    if (!user || !user.id) {
-                      alert('Please login first to access the Seller Portal!');
-                      navigate('/login');
-                      return;
-                    }
-
-                    const isSeller = localStorage.getItem('isSeller') === 'true' || user.role === 'seller';
-
-                    if (isSeller) {
-                      navigate('/seller');
-                    } else {
-                      alert('Please register/login as a Seller first!');
-                      navigate('/seller-login');
-                    }
-                  }}
+                  onClick={handleSellerPortalClick}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#696e79', fontSize: '13px', padding: 0, textAlign: 'left' }}
                 >
                   Seller Portal

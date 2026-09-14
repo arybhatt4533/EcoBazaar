@@ -58,6 +58,53 @@ body {
     overflow-x: hidden;
 }
 
+.dashboard-toast {
+    position: fixed;
+    top: 98px;
+    right: 28px;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(390px, calc(100vw - 32px));
+    padding: 14px 16px;
+    border: 1px solid #efc7ca;
+    border-left: 4px solid #c9000c;
+    border-radius: 12px;
+    background: rgba(255, 250, 248, 0.98);
+    color: #3a3032;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 12px 30px rgba(60, 25, 25, 0.16);
+    animation: dashboardToastIn 0.25s ease-out;
+}
+
+.dashboard-toast-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #c9000c;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+@keyframes dashboardToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* =========================================================
    ECOBAZAAR — PREMIUM NAVBAR
 ========================================================= */
@@ -776,6 +823,7 @@ body {
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 15px;
+    overflow: hidden;
 }
 
 .promo-section-title {
@@ -790,13 +838,29 @@ body {
     gap: 8px;
 }
 
+.promo-slider-viewport {
+    display: flex;
+    width: max-content;
+    gap: 16px;
+    animation: promoMarquee 42s linear infinite;
+    will-change: transform;
+}
+
 .promo-slider-track {
     display: flex;
     gap: 16px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    flex-shrink: 0;
     padding-bottom: 10px;
+}
+
+@keyframes promoMarquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-50% - 8px));
+    }
 }
 
 /* Scrollbar hide karne ke liye clean look */
@@ -1659,6 +1723,160 @@ body {
         0 16px 40px rgba(70, 35, 35, 0.10);
 }
 
+/* Wishlist preview */
+.wishlist-preview-section {
+    width: min(1200px, calc(100% - 40px));
+    margin: 28px auto 8px;
+    padding: 22px 24px;
+    background: linear-gradient(135deg, #fffafa, #fff2f3);
+    border: 1px solid #f0d6d8;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(80, 35, 35, 0.06);
+}
+
+.wishlist-preview-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.wishlist-preview-eyebrow {
+    color: #c9000c;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.wishlist-preview-heading h2 {
+    margin: 4px 0 0;
+    color: #292326;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+}
+
+.wishlist-preview-count {
+    color: #76696b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.wishlist-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.wishlist-preview-card {
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #f0e1e2;
+    border-radius: 12px;
+}
+
+.wishlist-preview-card img {
+    width: 92px;
+    min-height: 150px;
+    object-fit: cover;
+}
+
+.wishlist-preview-details {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.wishlist-preview-details > span {
+    overflow: hidden;
+    color: #c9000c;
+    font-size: 10px;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.wishlist-preview-details h3 {
+    display: -webkit-box;
+    margin: 5px 0 8px;
+    overflow: hidden;
+    color: #292326;
+    font-size: 13px;
+    line-height: 1.3;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.wishlist-preview-details strong {
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.wishlist-preview-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+}
+
+.wishlist-cart-btn,
+.wishlist-remove-btn {
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+}
+
+.wishlist-cart-btn {
+    flex: 1;
+    border-radius: 7px;
+    background: #c9000c;
+    color: #ffffff;
+    font-size: 11px;
+}
+
+.wishlist-remove-btn {
+    width: 30px;
+    border-radius: 50%;
+    background: #fff0f1;
+    color: #c9000c;
+    font-size: 16px;
+}
+
+@media (max-width: 1000px) {
+    .wishlist-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .wishlist-preview-section {
+        width: calc(100% - 24px);
+        padding: 18px 14px;
+    }
+
+    .wishlist-preview-grid {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+    }
+
+    .wishlist-preview-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .wishlist-preview-card {
+        min-width: 245px;
+    }
+}
+
 
 /* =========================================================
    TABLET
@@ -2005,8 +2223,27 @@ body {
 }
 
 .eco-size-guide {
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #f0c8ce;
+    border-radius: 50%;
+    background: #fff5f6;
     color: #e11d48;
+    font-size: 13px;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.eco-size-guide:hover,
+.eco-size-guide:focus-visible {
+    background: #e11d48;
+    color: #ffffff;
+    outline: none;
+    transform: scale(1.08);
 }
 
 .eco-size-options {
@@ -2598,7 +2835,7 @@ body {
 
     color: #c9000c;
 
-    font-size: 9px;
+    font-size: 10px;
 
     font-weight: 800;
 
@@ -2698,7 +2935,7 @@ body {
 
     font-family: 'Poppins', sans-serif;
 
-    font-size: 25px;
+    font-size: 28px;
 
     font-weight: 800;
 
@@ -2713,7 +2950,7 @@ body {
 
     color: #76696b;
 
-    font-size: 12px;
+    font-size: 14px;
 
     font-weight: 500;
 
@@ -2763,7 +3000,7 @@ body {
 .ending-text span {
     color: #a49a9c;
 
-    font-size: 8px;
+    font-size: 9px;
 
     font-weight: 800;
 
@@ -2774,7 +3011,7 @@ body {
 .ending-text strong {
     color: #3a3032;
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: 700;
 }
@@ -2834,7 +3071,7 @@ body {
 
     font-family: 'Poppins', sans-serif;
 
-    font-size: 18px;
+    font-size: 20px;
 
     font-weight: 800;
 
@@ -2866,7 +3103,7 @@ body {
 .countdown-unit small {
     color: #928789;
 
-    font-size: 7px;
+    font-size: 8px;
 
     font-weight: 800;
 
@@ -2883,7 +3120,7 @@ body {
 
     color: #c9000c;
 
-    font-size: 18px;
+    font-size: 20px;
 
     font-weight: 800;
 }
@@ -2914,7 +3151,7 @@ body {
 
     color: #716668;
 
-    font-size: 10px;
+    font-size: 12px;
 
     font-weight: 600;
 }
@@ -2936,7 +3173,7 @@ body {
 
     color: #c9000c;
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: 800;
 
@@ -3038,11 +3275,11 @@ body {
     }
 
     .flash-title-row h2 {
-        font-size: 21px;
+        font-size: 23px;
     }
 
     .flash-title-row p {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .flash-deals-right {
@@ -3056,24 +3293,24 @@ body {
     }
 
     .ending-text strong {
-        font-size: 9px;
+        font-size: 11px;
     }
 
     .time-box {
         width: 40px;
         height: 40px;
 
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .countdown-unit small {
-        font-size: 6px;
+        font-size: 7px;
     }
 
     .timer-colon {
         margin-top: 10px;
 
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .flash-deals-bottom {
@@ -3781,4 +4018,81 @@ body {
     -moz-osx-font-smoothing: grayscale;
 
     text-rendering: geometricPrecision;
+}
+
+.size-guide-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(24, 16, 18, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+.size-guide-modal {
+    position: relative;
+    width: min(480px, 100%);
+    padding: 28px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.size-guide-eyebrow {
+    color: #c9000c;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.size-guide-modal h2 {
+    margin: 5px 0 4px;
+    color: #292326;
+    font-size: 24px;
+}
+
+.size-guide-modal p {
+    margin: 0 0 18px;
+    color: #76696b;
+    font-size: 13px;
+}
+
+.size-guide-table-wrap {
+    overflow-x: auto;
+}
+
+.size-guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #3b3234;
+    font-size: 13px;
+    text-align: left;
+}
+
+.size-guide-table th,
+.size-guide-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0e2e3;
+}
+
+.size-guide-table th {
+    background: #fff5f6;
+    color: #c9000c;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.size-guide-table td:first-child {
+    font-weight: 800;
+}
+
+.size-guide-modal small {
+    display: block;
+    margin-top: 16px;
+    color: #8c7f82;
+    font-size: 11px;
+    line-height: 1.4;
 }
