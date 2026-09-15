@@ -5,8 +5,8 @@ import Signup from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import SellerUpload from './pages/SellerUpload';
 import { CheckoutCart } from './pages/CheckoutCart';
-import AdminLogin from './components/AdminLogin';
-import { AdminPanel } from './components/AdminPanel';
+import AdminLogin from './pages/AdminLogin';
+import { AdminPanel } from './pages/AdminPanel';
 
 
 // Security Check Component (Bina login ke page kholne se rokega)
